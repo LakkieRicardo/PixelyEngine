@@ -50,3 +50,4 @@ Here we try to keep things as generic as possible. We take no shortcuts.
 * Animations
 * File utility
 * Advanced memory management using JNI
+* Simple for the creator keyboard, controller, and mouse handling
