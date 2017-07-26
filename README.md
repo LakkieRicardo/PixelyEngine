@@ -8,3 +8,45 @@ Here we try to keep things as generic as possible. We take no shortcuts.
 
 #### If you want to contribute to this project, I suggest to know a basic understanding of Java, and Java's reflection system.
 ### I'm not an expert myself, so any support would be highly appreciated.
+
+## Todo list
+
+* Entities
+* Rendering
+
+* Physics
+* Collision
+* Gravity
+* Water
+* Buoyancy calculations
+* Splashing effects(sort of in particles)
+	
+* Sprites
+* Spritesheets
+* Transparency
+* Alpha color
+* Rotation
+* Transform
+* Vectors
+* Mathematical algorithms
+* Saving data
+* Basic editor
+* AI
+* Particles
+* Entity component-ing
+* Time class
+
+* UI
+* Buttons
+* Text
+* Input
+	
+* Levels
+* Level loading
+* Level saving
+* Ingame Level editor API
+	
+* Startup guide
+* Animations
+* File utility
+* Advanced memory management using JNI
