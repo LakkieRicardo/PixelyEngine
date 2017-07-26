@@ -67,6 +67,7 @@ public class Application {
 		clear(g, Colors.light_blue);
 		
 		g.setColor(Color.red);
+		
 		AnchorGraphics.setAnchorPoints(AnchorGraphicsMode.BOTTOM);
 		AnchorGraphics.drawRect(g, -100, -80, 200, 200);
 		
