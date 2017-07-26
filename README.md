@@ -6,7 +6,7 @@ This is intended to be supported to run on any frame.
 Here we try to keep things as generic as possible. We take no shortcuts.
 
 
-#### If you want to contribute to this project, I suggest to know a basic understanding of Java, and Java's reflection system.
+*If you want to contribute to this project, I suggest to know an understanding of Java, and game development.*
 ### I'm not an expert myself, so any support would be highly appreciated.
 
 ## Todo list
