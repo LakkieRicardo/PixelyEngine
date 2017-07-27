@@ -12,7 +12,6 @@ Here we try to keep things as generic as possible. We take no shortcuts.
 ## Todo list
 
 * Entities
-* Rendering
 
 * Physics
 * Collision
@@ -21,25 +20,22 @@ Here we try to keep things as generic as possible. We take no shortcuts.
 * Buoyancy calculations
 * Splashing effects(sort of in particles)
 	
-* Sprites
 * Spritesheets
 * Transparency
 * Alpha color
 * Rotation
 * Transform
-* Vectors
 * Mathematical algorithms
 * Saving data
 * Basic editor
 * AI
 * Particles
-* Entity component-ing
-* Time class
-
-* UI
+* Entity component-ing* UI
 * Buttons
 * Text
 * Input
+* Add more to vectors
+* Add more to time
 	
 * Levels
 * Level loading
