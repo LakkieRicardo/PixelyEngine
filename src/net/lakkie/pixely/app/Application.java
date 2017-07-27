@@ -8,9 +8,9 @@ import java.awt.image.BufferStrategy;
 import java.util.concurrent.TimeUnit;
 
 import net.lakkie.pixely.context.PixelyContext;
+import net.lakkie.pixely.graphics.RenderEngine;
+import net.lakkie.pixely.i.Renderable;
 import net.lakkie.pixely.i.Updatable;
-import net.lakkie.pixely.utils.AnchorGraphics;
-import net.lakkie.pixely.utils.AnchorGraphicsMode;
 import net.lakkie.pixely.utils.Colors;
 import net.lakkie.pixely.window.Window;
 
@@ -25,12 +25,13 @@ public class Application {
 	public static Window<?> currentWindow;
 	private static String normTitle;
 	private static Updatable update;
-	
+	private static Renderable render;
+
 	public static void exit(ExitCode code) {
 		System.exit(code.getCode());
 	}
 
-	public static void start(PixelyContext context, Window<?> window, Updatable update) {
+	public static void start(PixelyContext context, Window<?> window, Updatable update, Renderable render) {
 		if (recordLoadTime) {
 			if (nanoLoadTime) {
 				logLoadTime(System.nanoTime() - startTime);
@@ -45,9 +46,14 @@ public class Application {
 		currentWindow = window;
 		normTitle = window.getTitle();
 		Application.update = update;
+		Application.render = render;
+		if (c.getBufferStrategy() == null) {
+			c.createBufferStrategy(3);
+		}
+		ctx.set("graphics", c.getBufferStrategy().getDrawGraphics());
 		startLoop();
 	}
-	
+
 	private static void update() {
 		if (update != null) {
 			update.update(ctx);
@@ -56,25 +62,23 @@ public class Application {
 		c.setSize(targetWidth, targetHeight);
 		Time.update++;
 	}
-	
+
 	private static void render() {
-		if (c.getBufferStrategy() == null) {
-			c.createBufferStrategy(3);
-		}
 		BufferStrategy bs = c.getBufferStrategy();
 		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-		
+
 		clear(g, Colors.light_blue);
-		
+
 		g.setColor(Color.red);
-		
-		AnchorGraphics.setAnchorPoints(AnchorGraphicsMode.BOTTOM);
-		AnchorGraphics.drawRect(g, -100, -80, 200, 200);
-		
+
+		render.render(Application.ctx);
+		g.drawImage(((RenderEngine) Application.ctx.get("render_engine")).cameraImage, 0, 0, targetWidth, targetHeight,
+				null);
+
 		g.dispose();
 		bs.show();
 	}
-	
+
 	public static void clear(Graphics g, Color color) {
 		g.setColor(color);
 		g.fillRect(0, 0, targetWidth, targetHeight);
@@ -136,7 +140,7 @@ public class Application {
 	public static boolean isNanoAccurate() {
 		return nanoLoadTime;
 	}
-	
+
 	public static void pause(long time, TimeUnit unit) {
 		try {
 			Thread.sleep(unit.toMillis(time));

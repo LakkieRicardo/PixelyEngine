@@ -4,6 +4,8 @@ import java.awt.Canvas;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.lakkie.pixely.graphics.RenderEngine;
+
 public class PixelyContext {
 	
 	private Map<String, Object> fields;
@@ -21,12 +23,13 @@ public class PixelyContext {
 		fields.put(name, value);
 	}
 	
-	public void put(Canvas canvas, double ups, int width, int height, boolean debug) {
+	public void put(Canvas canvas, double ups, int width, int height, boolean debug, RenderEngine engine) {
 		fields.put("canvas", canvas);
 		fields.put("updates_per_second", ups);
 		fields.put("width", width);
 		fields.put("height", height);
 		fields.put("debug", debug);
+		fields.put("render_engine", engine);
 	}
 	
 	public double getUPS() {
