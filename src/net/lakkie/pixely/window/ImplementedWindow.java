@@ -42,6 +42,7 @@ public class ImplementedWindow<T extends IAbstractWindow> extends Window<T> {
 	public void appendContext() {
 		frame.addCanvas(getContext().getCanvas());
 		new InputRegistry(getContext().getCanvas());
+		flagContextAppended();
 	}
 
 	protected void setVisible(boolean visible) {

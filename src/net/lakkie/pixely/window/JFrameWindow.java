@@ -31,6 +31,7 @@ public class JFrameWindow extends Window<JFrame> {
 		frame.add(getContext().getCanvas());
 		new InputRegistry(frame);
 		new InputRegistry(getContext().getCanvas());
+		flagContextAppended();
 	}
 
 	protected void setVisible(boolean visible) {

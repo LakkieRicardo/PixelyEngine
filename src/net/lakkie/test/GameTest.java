@@ -2,20 +2,16 @@ package net.lakkie.test;
 
 import java.util.Random;
 
-import javax.swing.JFrame;
-
 import net.lakkie.pixely.app.Application;
-import net.lakkie.pixely.app.ExitCode;
 import net.lakkie.pixely.context.PixelyContext;
 import net.lakkie.pixely.graphics.RenderEngine;
 import net.lakkie.pixely.graphics.renders.RenderEngineTest;
 import net.lakkie.pixely.graphics.tex.Sprite;
-import net.lakkie.pixely.input.Buttons;
-import net.lakkie.pixely.input.InputManager;
 import net.lakkie.pixely.level.Tile;
+import net.lakkie.pixely.utils.MovementInputLayout;
+import net.lakkie.pixely.utils.TestSnippet;
 import net.lakkie.pixely.utils.Vector4;
 import net.lakkie.pixely.window.JFrameWindow;
-import net.lakkie.pixely.window.Window;
 
 public class GameTest {
 
@@ -36,10 +32,15 @@ public class GameTest {
 			new Tile(spriteTest, rand.nextInt(2000) - 1000, rand.nextInt(2000) - 1000, "tile_test");
 		}
 
+		// Create the context to store game variables in
 		PixelyContext context = new PixelyContext(new GameContextProvider());
-		Window<JFrame> jframe = new JFrameWindow(context, "Test Game", width, height);
-		jframe.appendContext();
+		// Create and setup the window
+		JFrameWindow jframe = new JFrameWindow(context, "Test Game", width, height);
+		
+		// Show the window
 		jframe.show();
+		
+		// Get the current render engine
 		RenderEngine engine = (RenderEngine) context.get("render_engine");
 
 		Application.start(context, jframe, (ctx) -> {
@@ -48,22 +49,8 @@ public class GameTest {
 			Application.targetWidth = ((JFrameWindow) jframe).getFrame().getWidth();
 			Application.targetHeight = ((JFrameWindow) jframe).getFrame().getHeight();
 
-			int speed = 3; 
-			if (InputManager.isKeyPressed(Buttons.VK_W)) {
-				engine.translateViewport(0, -speed);
-			}
-
-			if (InputManager.isKeyPressed(Buttons.VK_A)) {
-				engine.translateViewport(-speed, 0);
-			}
-			
-			if (InputManager.isKeyPressed(Buttons.VK_S)) {
-				engine.translateViewport(0, speed);
-			}
-
-			if (InputManager.isKeyPressed(Buttons.VK_D)) {
-				engine.translateViewport(speed, 0);
-			}
+			// Check for input and move
+			TestSnippet.moveUsingButtons(MovementInputLayout.WASD, 3, engine);
 
 		}, (ctx) -> {
 
@@ -75,8 +62,6 @@ public class GameTest {
 			}
 
 		});
-
-		Application.exit(ExitCode.SUCCESS);
 	}
 
 }

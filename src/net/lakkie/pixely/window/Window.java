@@ -18,6 +18,7 @@ public abstract class Window<T> {
 	protected String title;
 	protected int width, height;
 	private Class<T> type;
+	private boolean appendedContext;
 
 	public Window(PixelyContext context, String title, int width, int height, Class<T> type) {
 		assert context != null;
@@ -53,6 +54,9 @@ public abstract class Window<T> {
 	}
 
 	public void show() {
+		if (!isContextAppended()) {
+			appendContext();
+		}
 		getContext().set("frame_visible", true);
 		setVisible(true);
 	}
@@ -84,6 +88,14 @@ public abstract class Window<T> {
 
 	public Class<T> getType() {
 		return type;
+	}
+	
+	public boolean isContextAppended() {
+		return appendedContext;
+	}
+	
+	protected void flagContextAppended() {
+		appendedContext = true;
 	}
 
 }

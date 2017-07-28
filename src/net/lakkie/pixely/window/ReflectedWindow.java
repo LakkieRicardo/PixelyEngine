@@ -74,6 +74,7 @@ public class ReflectedWindow<T> extends Window<T> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		flagContextAppended();
 	}
 
 	protected void setVisible(boolean visible) {

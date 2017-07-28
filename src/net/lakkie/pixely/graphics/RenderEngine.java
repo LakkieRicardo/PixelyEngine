@@ -35,7 +35,7 @@ public abstract class RenderEngine implements Nameable {
 
 	public void translateViewport(int x, int y) {
 		this.viewport.x += x;
-		this.viewport.y += y;
+		this.viewport.y -= y;
 	}
 
 	public void clear(int color) {
