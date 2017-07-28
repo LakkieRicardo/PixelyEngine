@@ -12,8 +12,8 @@ public class InputManager {
 	static int mx, my;
 	static boolean[] mouseButtons = new boolean[50];
 	static boolean[] mouseButtonsClick = new boolean[50];
-	static boolean[] keys = new boolean[400];
-	static boolean[] keysClick = new boolean[400];
+	static boolean[] keys = new boolean[600];
+	static boolean[] keysClick = new boolean[600];
 
 	public static boolean isKeyPressed(int key) {
 		return keys[key];

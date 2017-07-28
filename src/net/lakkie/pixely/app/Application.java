@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import net.lakkie.pixely.context.PixelyContext;
@@ -27,6 +29,8 @@ public class Application {
 	private static String normTitle;
 	private static Updatable update;
 	private static Renderable render;
+	private static Set<Updatable> updates;
+	private static boolean close;
 
 	public static void exit(ExitCode code) {
 		System.exit(code.getCode());
@@ -52,6 +56,7 @@ public class Application {
 			c.createBufferStrategy(3);
 		}
 		ctx.set("graphics", c.getBufferStrategy().getDrawGraphics());
+		Application.updates = new HashSet<Updatable>();
 		startLoop();
 	}
 
@@ -59,12 +64,16 @@ public class Application {
 		if (update != null) {
 			update.update(ctx);
 		}
+		
+		for (Updatable update : updates) {
+			update.update(ctx);
+		}
 
 		c.setSize(targetWidth, targetHeight);
 		Time.update++;
 		postUpdate();
 	}
-	
+
 	private static void postUpdate() {
 		InputManager.clearFirstClicks();
 	}
@@ -98,7 +107,7 @@ public class Application {
 		long timer = System.currentTimeMillis();
 		int updates = 0;
 		int frames = 0;
-		while (true) {
+		while (!close) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
@@ -146,6 +155,10 @@ public class Application {
 	public static boolean isNanoAccurate() {
 		return nanoLoadTime;
 	}
+	
+	public static void requestClose() {
+		Application.close = true;
+	}
 
 	public static void pause(long time, TimeUnit unit) {
 		try {
@@ -153,6 +166,14 @@ public class Application {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * This reference to the set of updatables are used to add or remove or call updates.
+	 * @return A direct reference to the updatables
+	 */
+	public static Set<Updatable> getUpdatables() {
+		return Application.updates;
 	}
 
 }

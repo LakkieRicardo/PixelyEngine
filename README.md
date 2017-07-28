@@ -33,7 +33,6 @@ Here we try to keep things as generic as possible. We take no shortcuts.
 * Entity component-ing* UI
 * Buttons
 * Text
-* Input
 * Add more to vectors
 * Add more to time
 	

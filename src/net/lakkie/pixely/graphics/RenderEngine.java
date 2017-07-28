@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
 import net.lakkie.pixely.graphics.tex.Sprite;
+import net.lakkie.pixely.level.Tile;
 import net.lakkie.pixely.utils.Nameable;
 import net.lakkie.pixely.utils.Registry;
 import net.lakkie.pixely.utils.Vector4;
@@ -29,6 +30,13 @@ public abstract class RenderEngine implements Nameable {
 	}
 
 	public abstract void renderSprite(int worldX, int worldY, Sprite sprite);
+
+	public abstract void renderTile(Tile tile);
+
+	public void translateViewport(int x, int y) {
+		this.viewport.x += x;
+		this.viewport.y += y;
+	}
 
 	public void clear(int color) {
 		for (int i = 0; i < pixels.length; i++) {

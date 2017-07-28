@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class Registry<T extends Nameable> {
+public class Registry<T extends Nameable> implements Iterable<T> {
 
 	private Set<T> elems;
 
@@ -54,8 +54,16 @@ public class Registry<T extends Nameable> {
 		return get(name, true);
 	}
 	
-	public void enter(T t) {
+	public void submit(T t) {
 		elems.add(t);
+	}
+	
+	public boolean kick(T t) {
+		return elems.remove(t);
+	}
+
+	public Iterator<T> iterator() {
+		return getElements().iterator();
 	}
 
 }

@@ -8,6 +8,14 @@ import net.lakkie.pixely.graphics.RenderEngine;
 
 public class PixelyContext {
 	
+	public static final String canvas = "canvas";
+	public static final String ups = "updates_per_second";
+	public static final String width = "width";
+	public static final String height = "height";
+	public static final String debug = "debug";
+	public static final String renderEngine = "render_engine";
+	public static final String graphics = "graphics";
+	
 	private Map<String, Object> fields;
 	
 	public PixelyContext(ContextProvider provider) {
@@ -24,32 +32,32 @@ public class PixelyContext {
 	}
 	
 	public void put(Canvas canvas, double ups, int width, int height, boolean debug, RenderEngine engine) {
-		fields.put("canvas", canvas);
-		fields.put("updates_per_second", ups);
-		fields.put("width", width);
-		fields.put("height", height);
-		fields.put("debug", debug);
-		fields.put("render_engine", engine);
+		fields.put(PixelyContext.canvas, canvas);
+		fields.put(PixelyContext.ups, ups);
+		fields.put(PixelyContext.width, width);
+		fields.put(PixelyContext.height, height);
+		fields.put(PixelyContext.debug, debug);
+		fields.put(PixelyContext.renderEngine, engine);
 	}
 	
 	public double getUPS() {
-		return (double) fields.get("updates_per_second");
+		return (double) fields.get(PixelyContext.ups);
 	}
 	
 	public Canvas getCanvas() {
-		return (Canvas) fields.get("canvas");
+		return (Canvas) fields.get(PixelyContext.canvas);
 	}
 	
 	public int getWidth() {
-		return (int) fields.get("width");
+		return (int) fields.get(PixelyContext.width);
 	}
 	
 	public int getHeight() {
-		return (int) fields.get("height");
+		return (int) fields.get(PixelyContext.height);
 	}
 	
 	public boolean isDebugActive() {
-		return (boolean) fields.get("debug");
+		return (boolean) fields.get(PixelyContext.debug);
 	}
 	
 }

@@ -12,6 +12,7 @@ public class Sprite extends SimplifiedImage implements Nameable {
 	public Sprite(String loadPath, TextureLoadMode mode, String name) {
 		super(loadPath, mode);
 		this.name = name;
+		sprites.submit(this);
 	}
 	
 	public Sprite(String loadPath, String name) {
