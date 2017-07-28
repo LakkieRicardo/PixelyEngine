@@ -29,6 +29,7 @@ public class Application {
 	private static String normTitle;
 	private static Updatable update;
 	private static Renderable render;
+	private static Renderable ui;
 	private static Set<Updatable> updates;
 	private static boolean close;
 
@@ -55,7 +56,6 @@ public class Application {
 		if (c.getBufferStrategy() == null) {
 			c.createBufferStrategy(3);
 		}
-		ctx.set("graphics", c.getBufferStrategy().getDrawGraphics());
 		Application.updates = new HashSet<Updatable>();
 		startLoop();
 	}
@@ -80,15 +80,18 @@ public class Application {
 
 	private static void render() {
 		BufferStrategy bs = c.getBufferStrategy();
-		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
+		Graphics g = (Graphics2D) bs.getDrawGraphics();
+		ctx.set(PixelyContext.graphics, g);
 
 		clear(g, Colors.light_blue);
 
 		g.setColor(Color.red);
 
 		render.render(Application.ctx);
-		g.drawImage(((RenderEngine) Application.ctx.get("render_engine")).cameraImage, 0, 0, targetWidth, targetHeight,
+		g.drawImage(((RenderEngine) Application.ctx.get(PixelyContext.renderEngine)).cameraImage, 0, 0, targetWidth, targetHeight,
 				null);
+		
+		ui.render(ctx);
 
 		g.dispose();
 		bs.show();
@@ -166,6 +169,10 @@ public class Application {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void setUIRenderable(Renderable ui) {
+		Application.ui = ui;
 	}
 
 	/**

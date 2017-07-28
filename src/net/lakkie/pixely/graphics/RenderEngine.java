@@ -19,9 +19,7 @@ public abstract class RenderEngine implements Nameable {
 	private final String name;
 
 	public RenderEngine(int x, int y, int width, int height, String name) {
-		cameraImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		pixels = ((DataBufferInt) cameraImage.getRaster().getDataBuffer()).getData();
-		this.viewport = new Vector4(x, y, width, height);
+		resizeViewport(new Vector4(x, y, width, height));
 		this.name = name;
 	}
 
@@ -36,6 +34,21 @@ public abstract class RenderEngine implements Nameable {
 	public void translateViewport(int x, int y) {
 		this.viewport.x += x;
 		this.viewport.y -= y;
+	}
+	
+	public void resizeViewport(Vector4 newView) {
+		if (this.viewport != null) {
+			this.viewport = new Vector4(this.viewport.x, this.viewport.y, newView.w, newView.h);
+		} else {
+			this.viewport = newView;
+		}
+		cameraImage = new BufferedImage(this.viewport.w, this.viewport.h, BufferedImage.TYPE_INT_ARGB);
+		pixels = ((DataBufferInt) cameraImage.getRaster().getDataBuffer()).getData();
+	}
+	
+	public boolean hasViewportChanged(Vector4 original) {
+		Vector4 dis = new Vector4(0, 0, this.viewport.w, this.viewport.h);
+		return !dis.equals(original);
 	}
 
 	public void clear(int color) {

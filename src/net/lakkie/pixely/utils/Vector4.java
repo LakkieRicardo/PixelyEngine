@@ -53,4 +53,17 @@ public class Vector4 {
 		return this;
 	}
 	
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Vector4)) {
+			return obj == this;
+		} else {
+			Vector4 other = (Vector4) obj;
+			return this.x == other.x && this.y == other.y && this.w == other.w && this.h == other.h;
+		}
+	}
+	
+	public String toString() {
+		return String.format("(%s, %s, %s, %s0", this.x, this.y, this.w, this.h);
+	}
+	
 }

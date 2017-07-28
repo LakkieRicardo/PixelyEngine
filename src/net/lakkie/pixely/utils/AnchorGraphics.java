@@ -1,6 +1,6 @@
 package net.lakkie.pixely.utils;
 
-import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.awt.Image;
 
 import net.lakkie.pixely.app.Application;
@@ -24,17 +24,17 @@ public class AnchorGraphics {
 		return result;
 	}
 	
-	public static void drawImage(Graphics2D g, Image image, int x, int y, int width, int height) {
+	public static void drawImage(Graphics g, Image image, int x, int y, int width, int height) {
 		Vector2 anchor = getAnchorPos();
 		g.drawImage(image, x + anchor.x, y + anchor.y, width, height, null);
 	}
 	
-	public static void drawRect(Graphics2D g, int x, int y, int width, int height) {
+	public static void drawRect(Graphics g, int x, int y, int width, int height) {
 		Vector2 anchor = getAnchorPos();
 		g.fillRect(x + anchor.x, y + anchor.y, width, height);
 	}
 	
-	public static void drawCircle(Graphics2D g, int x, int y, int width, int height, int arc) {
+	public static void drawCircle(Graphics g, int x, int y, int width, int height, int arc) {
 		Vector2 anchor = getAnchorPos();
 		g.fillRoundRect(x + anchor.x, y + anchor.y, width, height, arc, arc);
 	}
