@@ -8,6 +8,7 @@ import net.lakkie.pixely.context.PixelyContext;
 import net.lakkie.pixely.exceptions.BuilderException;
 import net.lakkie.pixely.exceptions.ReflectionCastException;
 import net.lakkie.pixely.i.opt.IAbstractWindow;
+import net.lakkie.pixely.input.InputRegistry;
 
 public class FrameBuilder {
 
@@ -133,6 +134,8 @@ public class FrameBuilder {
 			// Use add(Component)
 			frame.getClass().getMethod("add", Component.class).invoke(frame, context.getCanvas());
 		}
+		
+		new InputRegistry(context.getCanvas());
 	}
 
 	/**

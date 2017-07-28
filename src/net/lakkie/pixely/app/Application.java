@@ -11,6 +11,7 @@ import net.lakkie.pixely.context.PixelyContext;
 import net.lakkie.pixely.graphics.RenderEngine;
 import net.lakkie.pixely.i.Renderable;
 import net.lakkie.pixely.i.Updatable;
+import net.lakkie.pixely.input.InputManager;
 import net.lakkie.pixely.utils.Colors;
 import net.lakkie.pixely.window.Window;
 
@@ -61,6 +62,11 @@ public class Application {
 
 		c.setSize(targetWidth, targetHeight);
 		Time.update++;
+		postUpdate();
+	}
+	
+	private static void postUpdate() {
+		InputManager.clearFirstClicks();
 	}
 
 	private static void render() {

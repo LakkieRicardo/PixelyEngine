@@ -13,11 +13,11 @@ public class AnchorGraphics {
 		AnchorGraphics.anchors = anchors;
 	}
 
-	public static Vector2i addAnchors() {
+	public static Vector2 addAnchors() {
 		if (anchors == null || anchors.length < 1) {
-			return new Vector2i();
+			return new Vector2();
 		}
-		Vector2i result = new Vector2i();
+		Vector2 result = new Vector2();
 		for (int i = 0; i < anchors.length; i++) {
 			result.add(anchors[i].asVec());
 		}
@@ -25,23 +25,23 @@ public class AnchorGraphics {
 	}
 	
 	public static void drawImage(Graphics2D g, Image image, int x, int y, int width, int height) {
-		Vector2i anchor = getAnchorPos();
+		Vector2 anchor = getAnchorPos();
 		g.drawImage(image, x + anchor.x, y + anchor.y, width, height, null);
 	}
 	
 	public static void drawRect(Graphics2D g, int x, int y, int width, int height) {
-		Vector2i anchor = getAnchorPos();
+		Vector2 anchor = getAnchorPos();
 		g.fillRect(x + anchor.x, y + anchor.y, width, height);
 	}
 	
 	public static void drawCircle(Graphics2D g, int x, int y, int width, int height, int arc) {
-		Vector2i anchor = getAnchorPos();
+		Vector2 anchor = getAnchorPos();
 		g.fillRoundRect(x + anchor.x, y + anchor.y, width, height, arc, arc);
 	}
 
-	public static Vector2i getAnchorPos() {
-		Vector2i anchor = addAnchors();
-		Vector2i r = new Vector2i();
+	public static Vector2 getAnchorPos() {
+		Vector2 anchor = addAnchors();
+		Vector2 r = new Vector2();
 		switch (anchor.x) {
 		case -1:
 			r.x = 0;

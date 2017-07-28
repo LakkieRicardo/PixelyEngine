@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import net.lakkie.pixely.context.PixelyContext;
+import net.lakkie.pixely.input.InputRegistry;
 
 public class JFrameWindow extends Window<JFrame> {
 
@@ -28,6 +29,8 @@ public class JFrameWindow extends Window<JFrame> {
 
 	public void appendContext() {
 		frame.add(getContext().getCanvas());
+		new InputRegistry(frame);
+		new InputRegistry(getContext().getCanvas());
 	}
 
 	protected void setVisible(boolean visible) {

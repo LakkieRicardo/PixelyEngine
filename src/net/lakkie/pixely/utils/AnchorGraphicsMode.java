@@ -19,8 +19,8 @@ public enum AnchorGraphicsMode {
 		return y;
 	}
 	
-	public Vector2i asVec() {
-		return new Vector2i(x, y);
+	public Vector2 asVec() {
+		return new Vector2(x, y);
 	}
 	
 }

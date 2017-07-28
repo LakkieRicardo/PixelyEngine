@@ -2,6 +2,7 @@ package net.lakkie.pixely.window;
 
 import net.lakkie.pixely.context.PixelyContext;
 import net.lakkie.pixely.i.opt.IAbstractWindow;
+import net.lakkie.pixely.input.InputRegistry;
 import net.lakkie.pixely.wrappers.FrameBuilder;
 
 /**
@@ -40,6 +41,7 @@ public class ImplementedWindow<T extends IAbstractWindow> extends Window<T> {
 
 	public void appendContext() {
 		frame.addCanvas(getContext().getCanvas());
+		new InputRegistry(getContext().getCanvas());
 	}
 
 	protected void setVisible(boolean visible) {
