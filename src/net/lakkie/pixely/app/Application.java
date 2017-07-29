@@ -15,6 +15,7 @@ import net.lakkie.pixely.i.Renderable;
 import net.lakkie.pixely.i.Updatable;
 import net.lakkie.pixely.input.InputManager;
 import net.lakkie.pixely.utils.Colors;
+import net.lakkie.pixely.utils.DataRepresenter;
 import net.lakkie.pixely.window.Window;
 
 public class Application {
@@ -23,21 +24,29 @@ public class Application {
 	private static boolean recordLoadTime = false;
 	private static long startTime;
 	private static Canvas c;
+	/**
+	 * Null outside of the game running.
+	 */
 	public static PixelyContext ctx;
 	public static int targetWidth, targetHeight;
 	public static Window<?> currentWindow;
 	private static String normTitle;
 	private static Updatable update;
+	private static Updatable postUpdate;
 	private static Renderable render;
 	private static Renderable ui;
-	private static Set<Updatable> updates;
+	private static Set<Updatable> updates = new HashSet<Updatable>();
+	private static Set<Updatable> postUpdates = new HashSet<Updatable>();
 	private static boolean close;
+	private static int fps, ups;
+	private static int spritesOnScreen;
+	private static int loop_Frames, loop_Updates;
 
 	public static void exit(ExitCode code) {
 		System.exit(code.getCode());
 	}
 
-	public static void start(PixelyContext context, Window<?> window, Updatable update, Renderable render) {
+	public static void start(PixelyContext context, Window<?> window) {
 		if (recordLoadTime) {
 			if (nanoLoadTime) {
 				logLoadTime(System.nanoTime() - startTime);
@@ -51,20 +60,18 @@ public class Application {
 		targetHeight = context.getHeight();
 		currentWindow = window;
 		normTitle = window.getTitle();
-		Application.update = update;
-		Application.render = render;
 		if (c.getBufferStrategy() == null) {
 			c.createBufferStrategy(3);
 		}
-		Application.updates = new HashSet<Updatable>();
 		startLoop();
+		ctx = null;
 	}
 
 	private static void update() {
 		if (update != null) {
 			update.update(ctx);
 		}
-		
+
 		for (Updatable update : updates) {
 			update.update(ctx);
 		}
@@ -76,6 +83,10 @@ public class Application {
 
 	private static void postUpdate() {
 		InputManager.clearFirstClicks();
+		if (postUpdate != null) {
+			postUpdate.update(ctx);
+		}
+		spritesOnScreen = 0;
 	}
 
 	private static void render() {
@@ -87,11 +98,28 @@ public class Application {
 
 		g.setColor(Color.red);
 
-		render.render(Application.ctx);
-		g.drawImage(((RenderEngine) Application.ctx.get(PixelyContext.renderEngine)).cameraImage, 0, 0, targetWidth, targetHeight,
-				null);
-		
-		ui.render(ctx);
+		if (render != null) {
+			render.render(Application.ctx);
+		}
+		g.drawImage(((RenderEngine) Application.ctx.get(PixelyContext.renderEngine)).cameraImage, 0, 0, targetWidth,
+				targetHeight, null);
+
+		if (ui != null) {
+			ui.render(ctx);
+		}
+
+		if (ctx.isDebugActive()) {
+			g.setColor(Color.red);
+			g.drawString("FPS: " + fps, 10, 20);
+			g.drawString("UPS: " + ups, 10, 40);
+			g.drawString("Viewport: " + ((RenderEngine) ctx.get(PixelyContext.renderEngine)).viewport, 10, 60);
+			g.drawString("Update Count: " + Time.update, 10, 80);
+			g.drawString("Should close: " + DataRepresenter.booleanToYesNo(close), 10, 100);
+			g.drawString("Update Function Count: " + updates.size(), 10, 120);
+			g.drawString("Sprites On Screen: " + spritesOnScreen, 10, 140);
+			g.drawString("Live Frames: " + loop_Frames, 10, 160);
+			g.drawString("Live Updates: " + loop_Updates, 10, 180);
+		}
 
 		g.dispose();
 		bs.show();
@@ -108,27 +136,27 @@ public class Application {
 		double ns = 1000000000 / amountOfTicks;
 		double delta = 0;
 		long timer = System.currentTimeMillis();
-		int updates = 0;
-		int frames = 0;
 		while (!close) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
 			while (delta >= 1) {
 				update();
-				updates++;
+				loop_Updates++;
 				delta--;
 			}
 			render();
-			frames++;
+			loop_Frames++;
 
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
 				if (ctx.isDebugActive()) {
-					currentWindow.rename(normTitle + " | FPS: " + frames + " UPS: " + updates);
+					currentWindow.rename(normTitle + " | FPS: " + loop_Frames + " UPS: " + loop_Updates);
 				}
-				frames = 0;
-				updates = 0;
+				fps = loop_Frames;
+				ups = loop_Updates;
+				loop_Frames = 0;
+				loop_Updates = 0;
 			}
 		}
 	}
@@ -158,7 +186,7 @@ public class Application {
 	public static boolean isNanoAccurate() {
 		return nanoLoadTime;
 	}
-	
+
 	public static void requestClose() {
 		Application.close = true;
 	}
@@ -170,17 +198,39 @@ public class Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void setUIRenderable(Renderable ui) {
 		Application.ui = ui;
 	}
 
+	public static void setRender(Renderable render) {
+		Application.render = render;
+	}
+
+	public static void setUpdate(Updatable update) {
+		Application.update = update;
+	}
+
+	public static void setPostUpdate(Updatable postUpdate) {
+		Application.postUpdate = postUpdate;
+	}
+
 	/**
-	 * This reference to the set of updatables are used to add or remove or call updates.
+	 * This reference to the set of updatables are used to add or remove or call
+	 * updates.
+	 * 
 	 * @return A direct reference to the updatables
 	 */
 	public static Set<Updatable> getUpdatables() {
 		return Application.updates;
+	}
+	
+	public static Set<Updatable> getPostUpdatables() {
+		return postUpdates;
+	}
+	
+	public static void registerSpriteRender() {
+		spritesOnScreen++;
 	}
 
 }

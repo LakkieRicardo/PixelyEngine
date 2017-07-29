@@ -17,9 +17,13 @@ public class PixelyVersion {
 	public static String getBuildNumber() {
 		return "1";
 	}
+	
+	public static boolean isDevelopmentBuild() {
+		return true;
+	}
 
-	public static String getVersionString() {
-		return getVersionType() + getVersionMajor() + "." + getVersionMinor() + " Build " + getBuildNumber();
+	public static String getVersion() {
+		return getVersionType() + getVersionMajor() + "." + getVersionMinor() + " " + (isDevelopmentBuild() ? "Development " : "") + "Build " + getBuildNumber();
 	}
 
 }

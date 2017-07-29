@@ -62,8 +62,24 @@ public class Vector4 {
 		}
 	}
 	
+	public boolean equalsSize(Vector4 other) {
+		return this.w == other.w && this.h == other.h;
+	}
+	
+	public Vector4 toAbsoluteVector() {
+		return new Vector4(Math.abs(x), Math.abs(y), Math.abs(w), Math.abs(h));
+	}
+	
+	public Vector2 toSizeVector() {
+		return new Vector2(this.w, this.h);
+	}
+	
+	public Vector2 toPositionVector() {
+		return new Vector2(this.x, this.y);
+	}
+	
 	public String toString() {
-		return String.format("(%s, %s, %s, %s0", this.x, this.y, this.w, this.h);
+		return String.format("(%s, %s, %s, %s)", this.x, this.y, this.w, this.h);
 	}
 	
 }

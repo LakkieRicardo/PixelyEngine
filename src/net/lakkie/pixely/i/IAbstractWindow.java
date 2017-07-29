@@ -1,4 +1,4 @@
-package net.lakkie.pixely.i.opt;
+package net.lakkie.pixely.i;
 
 import java.awt.Canvas;
 

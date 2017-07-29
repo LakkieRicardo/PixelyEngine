@@ -45,9 +45,21 @@ public class Vector2 {
 		this.y /= other.y;
 		return this;
 	}
+	
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Vector2)) {
+			return obj == this;
+		}
+		Vector2 other = (Vector2) obj;
+		return this.x == other.x && this.y == other.y;
+	}
 
 	public String toString() {
 		return String.format("(%s, %s)", x, y);
+	}
+
+	public Vector2 toAbsoluteVector() {
+		return new Vector2(Math.abs(this.x), Math.abs(this.y));
 	}
 
 }

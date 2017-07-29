@@ -7,7 +7,7 @@ import java.awt.Frame;
 import net.lakkie.pixely.context.PixelyContext;
 import net.lakkie.pixely.exceptions.BuilderException;
 import net.lakkie.pixely.exceptions.ReflectionCastException;
-import net.lakkie.pixely.i.opt.IAbstractWindow;
+import net.lakkie.pixely.i.IAbstractWindow;
 import net.lakkie.pixely.input.InputRegistry;
 
 public class FrameBuilder {

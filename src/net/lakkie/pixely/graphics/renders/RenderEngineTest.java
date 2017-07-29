@@ -1,5 +1,7 @@
 package net.lakkie.pixely.graphics.renders;
 
+import net.lakkie.pixely.app.Application;
+import net.lakkie.pixely.entity.Entity;
 import net.lakkie.pixely.graphics.RenderEngine;
 import net.lakkie.pixely.graphics.tex.Sprite;
 import net.lakkie.pixely.level.Tile;
@@ -37,10 +39,15 @@ public class RenderEngineTest extends RenderEngine {
 				this.pixels[viewPosX + viewPosY * viewport.w] = sprite.pixels[x + y * sprite.width];
 			}
 		}
+		Application.registerSpriteRender();
 	}
 
 	public void renderTile(Tile tile) {
 		renderSprite(tile.position.x, tile.position.y, tile.sprite);
+	}
+	
+	public void renderEntity(Entity entity) {
+		entity.renderer.render(Application.ctx, entity);
 	}
 
 }

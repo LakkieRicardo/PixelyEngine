@@ -32,7 +32,7 @@ public class BufferedTextureLoader {
 	public static IntBuffer loadTexture(String loadPath) {
 		try {
 			BufferedImage img = ImageIO.read(BufferedTextureLoader.class.getResource(loadPath));
-			IntBuffer result = IntBuffer.allocate(img.getWidth() * img.getHeight());
+			IntBuffer result = IntBuffer.allocate(img.getWidth() * img.getHeight() + 2);
 			result.put(img.getWidth());
 			result.put(img.getHeight());
 			result.put(img.getRGB(0, 0, img.getWidth(), img.getHeight(), new int[img.getWidth() * img.getHeight()], 0,

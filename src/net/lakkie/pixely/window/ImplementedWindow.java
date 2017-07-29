@@ -1,7 +1,7 @@
 package net.lakkie.pixely.window;
 
 import net.lakkie.pixely.context.PixelyContext;
-import net.lakkie.pixely.i.opt.IAbstractWindow;
+import net.lakkie.pixely.i.IAbstractWindow;
 import net.lakkie.pixely.input.InputRegistry;
 import net.lakkie.pixely.wrappers.FrameBuilder;
 

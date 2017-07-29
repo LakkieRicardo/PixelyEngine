@@ -5,8 +5,7 @@ import net.lakkie.pixely.input.InputManager;
 
 public class TestSnippet {
 
-	public static void moveUsingButtons(MovementInputLayout layout, int moveSpeed, RenderEngine engine) {
-		int speed = 3;
+	public static void moveUsingButtons(MovementInputLayout layout, int speed, RenderEngine engine) {
 		if (InputManager.isKeyPressed(layout.getUpKey())) {
 			engine.translateViewport(0, speed);
 		}
