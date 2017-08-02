@@ -6,10 +6,12 @@ import net.lakkie.pixely.app.Application;
 import net.lakkie.pixely.context.PixelyContext;
 import net.lakkie.pixely.entity.Entity;
 import net.lakkie.pixely.graphics.RenderEngine;
+import net.lakkie.pixely.graphics.RenderEngineResizeMode;
 import net.lakkie.pixely.graphics.renders.RenderEngineTest;
 import net.lakkie.pixely.graphics.tex.Sprite;
 import net.lakkie.pixely.input.Buttons;
 import net.lakkie.pixely.input.InputManager;
+import net.lakkie.pixely.level.Level;
 import net.lakkie.pixely.level.Tile;
 import net.lakkie.pixely.utils.Vector2;
 import net.lakkie.pixely.utils.Vector4;
@@ -27,16 +29,19 @@ public class GameTest {
 		// Create the render engine
 		new RenderEngineTest(new Vector4(0, 0, 1280, 720));
 
+		// Create a level
+		Level level = new Level();
+		
 		// Load sprites
 		Sprite spriteTest = new Sprite("/img/test.png", "test");
 		Sprite spriteRed = new Sprite("/img/red.png", "test");
 		
 		// Load entities
-		Entity entity = new EntityPlayer(spriteRed, new Vector2(50, 50), "player");
+		Entity entity = new EntityPlayer(level, spriteRed, new Vector2(50, 50), "player");
 		
 		// Load tiles
 		for (int i = 0; i < 1000; i++) {
-			new Tile(spriteTest, rand.nextInt(2000) - 1000, rand.nextInt(2000) - 1000, "tile_test");
+			new Tile(level, spriteTest, rand.nextInt(2000) - 1000, rand.nextInt(2000) - 1000, "tile_test");
 		}
 
 		// Create the context to store game variables in
@@ -51,6 +56,7 @@ public class GameTest {
 		
 		// Get the current render engine
 		RenderEngine engine = (RenderEngine) context.get("render_engine");
+		engine.resizeMode = RenderEngineResizeMode.PADDING_BOTTOM_RIGHT;
 		
 		Application.setUpdate((ctx) -> {
 			/*

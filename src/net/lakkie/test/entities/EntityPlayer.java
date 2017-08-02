@@ -6,12 +6,13 @@ import net.lakkie.pixely.graphics.tex.Sprite;
 import net.lakkie.pixely.i.EntityRenderer;
 import net.lakkie.pixely.input.Buttons;
 import net.lakkie.pixely.input.InputManager;
+import net.lakkie.pixely.level.Level;
 import net.lakkie.pixely.utils.Vector2;
 
 public class EntityPlayer extends Entity {
 
-	public EntityPlayer(Sprite sprite, Vector2 pos, String name) {
-		super(sprite, pos, name);
+	public EntityPlayer(Level level, Sprite sprite, Vector2 pos, String name) {
+		super(level, sprite, pos, name);
 	}
 
 	public void onLoad(PixelyContext ctx) {

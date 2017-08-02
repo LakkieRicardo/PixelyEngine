@@ -14,17 +14,19 @@ public class Tile implements Nameable, Updatable {
 	public Sprite sprite;
 	public Vector2 position;
 	public String name;
+	public Level level;
 	private boolean updates = false;
 	
-	public Tile(Sprite sprite, int x, int y, String name) {
+	public Tile(Level level, Sprite sprite, int x, int y, String name) {
+		this.level = level;
 		this.name = name;
 		this.sprite = sprite;
 		this.position = new Vector2(x, y);
 		tiles.submit(this);
 	}
 	
-	public Tile(Sprite sprite, Vector2 pos, String name) {
-		this(sprite, pos.x, pos.y, name);
+	public Tile(Level level, Sprite sprite, Vector2 pos, String name) {
+		this(level, sprite, pos.x, pos.y, name);
 	}
 	
 	public void translate(Vector2 translation) {

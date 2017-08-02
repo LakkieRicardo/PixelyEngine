@@ -9,16 +9,22 @@ import net.lakkie.pixely.graphics.tex.Sprite;
 import net.lakkie.pixely.i.EntityRenderer;
 import net.lakkie.pixely.i.Renderable;
 import net.lakkie.pixely.i.Updatable;
+import net.lakkie.pixely.level.Level;
+import net.lakkie.pixely.utils.Nameable;
+import net.lakkie.pixely.utils.Registry;
 import net.lakkie.pixely.utils.Vector2;
 
-public abstract class Entity implements Updatable, Renderable {
+public abstract class Entity implements Updatable, Renderable, Nameable {
 
+	public static final Registry<Entity> entities = new Registry<Entity>();
 	public Vector2 pos;
 	public String name;
 	public List<EntityAttachment> attachments;
 	public EntityRenderer renderer;
+	public Level level;
 
-	public Entity(Sprite sprite, Vector2 pos, String name) {
+	public Entity(Level level, Sprite sprite, Vector2 pos, String name) {
+		this.level = level;
 		this.pos = pos;
 		this.name = name;
 		this.attachments = new ArrayList<EntityAttachment>();
@@ -26,6 +32,7 @@ public abstract class Entity implements Updatable, Renderable {
 		this.renderer = renderer == null ? new DefaultEntityRenderer(sprite) : renderer;
 		Application.getUpdatables().add(this);
 		Application.getPostUpdatables().add(this);
+		entities.submit(this);
 	}
 
 	/**
@@ -78,6 +85,10 @@ public abstract class Entity implements Updatable, Renderable {
 	 */
 	public EntityRenderer getEntityRenderer(Sprite defaultSprite) {
 		return null;
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 
 	public final void start(PixelyContext ctx) {

@@ -16,7 +16,7 @@ public class PixelyContext {
 	public static final String renderEngine = "render_engine";
 	public static final String graphics = "graphics";
 	
-	private Map<String, Object> fields;
+	Map<String, Object> fields;
 	
 	public PixelyContext(ContextProvider provider) {
 		this.fields = new HashMap<String, Object>();
@@ -58,6 +58,13 @@ public class PixelyContext {
 	
 	public boolean isDebugActive() {
 		return (boolean) fields.get(PixelyContext.debug);
+	}
+	
+	/**
+	 * @return A copy of all of the fields.
+	 */
+	public Map<String, Object> getFields() {
+		return new HashMap<>(this.fields);
 	}
 	
 }
