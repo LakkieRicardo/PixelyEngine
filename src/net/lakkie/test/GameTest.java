@@ -31,14 +31,14 @@ public class GameTest {
 
 		// Create a level
 		Level level = new Level("test");
-		
+
 		// Load sprites
 		Sprite spriteRed = new Sprite("/img/red.png", "red");
 		Sprite spriteBlank = new Sprite(0xff00ff00, width, height, "blank");
-		
+
 		// Load entities
 		Entity entity = new EntityPlayer(level, spriteRed, new Vector2(50, 50), "player");
-		
+
 		// Load tiles
 		new Tile(level, spriteBlank, new Vector2(0, 0), "backdrop");
 
@@ -46,21 +46,21 @@ public class GameTest {
 		PixelyContext context = new PixelyContext(new GameContextProvider());
 		// Create and setup the window
 		JFrameWindow jframe = new JFrameWindow(context, "Test Game", width, height);
-		
+
 		// Show the window
 		jframe.show();
-		
+
 		entity.start(context);
-		
+
 		// Get the current render engine
 		RenderEngine engine = (RenderEngine) context.get(PixelyContext.renderEngine);
 		engine.resizeMode = RenderEngineResizeMode.PADDING_BOTTOM_RIGHT;
-		
+
 		Application.setUpdate((ctx) -> {
 			/*
 			 * Update clause
 			 */
-			
+
 			jframe.updateCanvasWithFrame();
 			Vector4 windowSize = jframe.getSize();
 			if (engine.hasViewportChanged(windowSize)) {
@@ -72,25 +72,25 @@ public class GameTest {
 				ctx.set(PixelyContext.debug, !ctx.isDebugActive());
 			}
 		});
-		
+
 		Application.setRender((ctx) -> {
 
 			/*
 			 * Render clause
 			 */
-			
+
 			// Clear background
 			engine.clear(0x00000000);
-			
+
 			// Render all tiles
 			for (Tile tile : Tile.tiles) {
 				engine.renderTile(tile);
 			}
-			
+
 			engine.renderEntity(entity);
 
 		});
-		
+
 		Application.start(context, jframe);
 	}
 

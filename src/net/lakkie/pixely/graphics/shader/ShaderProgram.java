@@ -26,6 +26,7 @@ public class ShaderProgram {
 	private IShaderComponentSpriteRender spriteRender;
 	private IShaderComponentTileRender tileRender;
 	private List<IShaderComponentBase> otherComponents = new ArrayList<IShaderComponentBase>();
+	private boolean instantiated = false;
 
 	public void startSpriteRender(int wx, int wy, Sprite sprite, int[] pixels) {
 		spriteRender.assignCanvas(pixels);
@@ -104,6 +105,11 @@ public class ShaderProgram {
 				comp.init();
 			}
 		}
+		this.instantiated = true;
+	}
+	
+	public boolean isInited() {
+		return instantiated;
 	}
 
 }

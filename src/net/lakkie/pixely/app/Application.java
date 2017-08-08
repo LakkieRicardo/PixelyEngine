@@ -42,6 +42,7 @@ public class Application {
 	private static int fps, ups;
 	private static int spritesOnScreen;
 	private static int loop_Frames, loop_Updates;
+	private static Runnable firstStart;
 	public static RenderEngine renderEngine;
 
 	public static void exit(ExitCode code) {
@@ -65,6 +66,9 @@ public class Application {
 		renderEngine = (RenderEngine) ctx.get(PixelyContext.renderEngine);
 		if (c.getBufferStrategy() == null) {
 			c.createBufferStrategy(3);
+		}
+		if (firstStart != null) {
+			firstStart.run();
 		}
 		renderEngine.firstStart();
 		startLoop();
@@ -234,6 +238,10 @@ public class Application {
 	
 	public static void registerSpriteRender() {
 		spritesOnScreen++;
+	}
+	
+	public static void setFirstStart(Runnable r) {
+		firstStart = r;
 	}
 
 }

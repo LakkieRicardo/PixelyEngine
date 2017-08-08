@@ -37,7 +37,9 @@ public class RenderEngineShaded extends RenderEngine {
 	}
 	
 	public void firstStart() {
-		GenericShader.instantiate(this.shader);
+		if (!this.shader.isInited()) {
+			GenericShader.instantiate(this.shader);
+		}
 	}
 
 	public void renderSprite(int worldX, int worldY, Sprite sprite) {

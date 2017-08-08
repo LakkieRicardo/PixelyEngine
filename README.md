@@ -11,8 +11,6 @@ Here we try to keep things as generic as possible. We take no shortcuts.
 
 ## Todo list
 
-* Entities
-
 * Physics
 * Collision
 * Gravity
@@ -28,16 +26,15 @@ Here we try to keep things as generic as possible. We take no shortcuts.
 * Mathematical algorithms
 * Saving data
 * Basic editor
-* AI
+* Artificial intelligence
 * Particles
-* Entity component-ing* UI
+* Entity component-ing
+* User interface
 * Buttons
 * Text
-* Add more to vectors
 * Add more to time
 * YAML Configuration loading
 	
-* Levels
 * Level loading
 * Level saving
 * Ingame Level editor API
@@ -46,4 +43,3 @@ Here we try to keep things as generic as possible. We take no shortcuts.
 * Animations
 * File utility
 * Advanced memory management using JNI
-* Simple for the creator keyboard, controller, and mouse handling
