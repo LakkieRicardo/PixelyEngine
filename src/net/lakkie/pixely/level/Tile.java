@@ -12,7 +12,7 @@ public class Tile implements Nameable, Updatable {
 
 	public static final Registry<Tile> tiles = new Registry<Tile>();
 	public Sprite sprite;
-	public Vector2 position;
+	public Vector2 pos;
 	public String name;
 	public Level level;
 	private boolean updates = false;
@@ -21,7 +21,7 @@ public class Tile implements Nameable, Updatable {
 		this.level = level;
 		this.name = name;
 		this.sprite = sprite;
-		this.position = new Vector2(x, y);
+		this.pos = new Vector2(x, y);
 		tiles.submit(this);
 	}
 	
@@ -30,11 +30,11 @@ public class Tile implements Nameable, Updatable {
 	}
 	
 	public void translate(Vector2 translation) {
-		this.position.add(translation);
+		this.pos.add(translation);
 	}
 	
 	public void setTranslation(Vector2 translation) {
-		this.position = translation;
+		this.pos = translation;
 	}
 	
 	public String getName() {

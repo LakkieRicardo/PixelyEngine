@@ -53,6 +53,10 @@ public class Vector2 {
 		Vector2 other = (Vector2) obj;
 		return this.x == other.x && this.y == other.y;
 	}
+	
+	public int size() {
+		return this.x + this.y;
+	}
 
 	public String toString() {
 		return String.format("(%s, %s)", x, y);

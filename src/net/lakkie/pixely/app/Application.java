@@ -20,13 +20,14 @@ import net.lakkie.pixely.window.Window;
 
 public class Application {
 
+	/*
+	 * TODO: Organize these variables, and document them!
+	 */
+	
 	private static boolean nanoLoadTime = false;
 	private static boolean recordLoadTime = false;
 	private static long startTime;
 	private static Canvas c;
-	/**
-	 * Null outside of the game running.
-	 */
 	public static PixelyContext ctx;
 	public static int targetWidth, targetHeight;
 	public static Window<?> currentWindow;
@@ -41,6 +42,7 @@ public class Application {
 	private static int fps, ups;
 	private static int spritesOnScreen;
 	private static int loop_Frames, loop_Updates;
+	public static RenderEngine renderEngine;
 
 	public static void exit(ExitCode code) {
 		System.exit(code.getCode());
@@ -60,11 +62,12 @@ public class Application {
 		targetHeight = context.getHeight();
 		currentWindow = window;
 		normTitle = window.getTitle();
+		renderEngine = (RenderEngine) ctx.get(PixelyContext.renderEngine);
 		if (c.getBufferStrategy() == null) {
 			c.createBufferStrategy(3);
 		}
+		renderEngine.firstStart();
 		startLoop();
-		ctx = null;
 	}
 
 	private static void update() {

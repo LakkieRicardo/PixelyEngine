@@ -24,6 +24,7 @@ public abstract class RenderEngine implements Nameable {
 	public RenderEngine(int x, int y, int width, int height, String name) {
 		resizeViewport(new Vector4(x, y, width, height));
 		this.name = name;
+		engines.submit(this);
 	}
 
 	public RenderEngine(Vector4 viewport, String name) {
@@ -35,6 +36,9 @@ public abstract class RenderEngine implements Nameable {
 	public abstract void renderTile(Tile tile);
 
 	public abstract void renderEntity(Entity entity);
+
+	public void firstStart() {
+	}
 
 	public void translateViewport(int x, int y) {
 		this.viewport.x += x;
@@ -70,7 +74,9 @@ public abstract class RenderEngine implements Nameable {
 
 			}
 			return;
-		default: // By default use RenderEngineResizeMode.PADDING_BOTTOM_RIGHT(extend the w and h)
+		default: // By default use
+					// RenderEngineResizeMode.PADDING_BOTTOM_RIGHT(extend the w
+					// and h)
 			this.viewport.w = newView.w;
 			this.viewport.h = newView.h;
 		}

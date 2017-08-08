@@ -7,7 +7,7 @@ import net.lakkie.pixely.context.PixelyContext;
 import net.lakkie.pixely.entity.Entity;
 import net.lakkie.pixely.graphics.RenderEngine;
 import net.lakkie.pixely.graphics.RenderEngineResizeMode;
-import net.lakkie.pixely.graphics.renders.RenderEngineTest;
+import net.lakkie.pixely.graphics.renders.RenderEngineShaded;
 import net.lakkie.pixely.graphics.tex.Sprite;
 import net.lakkie.pixely.input.Buttons;
 import net.lakkie.pixely.input.InputManager;
@@ -27,22 +27,20 @@ public class GameTest {
 		Application.recordLoadStart(true);
 
 		// Create the render engine
-		new RenderEngineTest(new Vector4(0, 0, 1280, 720));
+		new RenderEngineShaded(new Vector4(0, 0, width, height));
 
 		// Create a level
-		Level level = new Level();
+		Level level = new Level("test");
 		
 		// Load sprites
-		Sprite spriteTest = new Sprite("/img/test.png", "test");
-		Sprite spriteRed = new Sprite("/img/red.png", "test");
+		Sprite spriteRed = new Sprite("/img/red.png", "red");
+		Sprite spriteBlank = new Sprite(0xff00ff00, width, height, "blank");
 		
 		// Load entities
 		Entity entity = new EntityPlayer(level, spriteRed, new Vector2(50, 50), "player");
 		
 		// Load tiles
-		for (int i = 0; i < 1000; i++) {
-			new Tile(level, spriteTest, rand.nextInt(2000) - 1000, rand.nextInt(2000) - 1000, "tile_test");
-		}
+		new Tile(level, spriteBlank, new Vector2(0, 0), "backdrop");
 
 		// Create the context to store game variables in
 		PixelyContext context = new PixelyContext(new GameContextProvider());
@@ -55,7 +53,7 @@ public class GameTest {
 		entity.start(context);
 		
 		// Get the current render engine
-		RenderEngine engine = (RenderEngine) context.get("render_engine");
+		RenderEngine engine = (RenderEngine) context.get(PixelyContext.renderEngine);
 		engine.resizeMode = RenderEngineResizeMode.PADDING_BOTTOM_RIGHT;
 		
 		Application.setUpdate((ctx) -> {

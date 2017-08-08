@@ -27,7 +27,12 @@ import net.lakkie.pixely.i.Updatable;
 public class Level implements Updatable, Renderable {
 
 	private boolean unloaded = false;
+	public final String name;
 
+	public Level(String name) {
+		this.name = name;
+	}
+	
 	/**
 	 * Prevents any method from this class from being successfully called. This
 	 * also removes all tile and entity references to this level.
@@ -122,6 +127,10 @@ public class Level implements Updatable, Renderable {
 	public final void update(PixelyContext context) {
 		if (unloaded)
 			return;
+	}
+	
+	public String getName() {
+		return name;
 	}
 
 }

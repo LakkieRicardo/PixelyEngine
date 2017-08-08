@@ -6,12 +6,13 @@ import net.lakkie.pixely.app.CanvasCreator;
 import net.lakkie.pixely.context.ContextProvider;
 import net.lakkie.pixely.context.PixelyContext;
 import net.lakkie.pixely.graphics.RenderEngine;
+import net.lakkie.pixely.graphics.renders.RenderEngineShaded;
 
 public class GameContextProvider implements ContextProvider {
 
 	public void setup(PixelyContext context) {
 		Canvas canvas = CanvasCreator.createCanvas(GameTest.width, GameTest.height);
-		context.put(canvas, 60.0D, GameTest.width, GameTest.height, false, RenderEngine.engines.get("test"));
+		context.put(canvas, 60.0D, GameTest.width, GameTest.height, false, RenderEngine.engines.get(RenderEngineShaded.name));
 	}
 
 }
