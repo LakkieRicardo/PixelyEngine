@@ -1,6 +1,6 @@
 package net.lakkie.pixely.utils;
 
-public class Mathe {
+public class Mathi {
 
 	public static int clamp(int value, int min, int max) {
 		if (value <= min) {

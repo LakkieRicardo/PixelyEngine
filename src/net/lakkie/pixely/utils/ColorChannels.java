@@ -38,10 +38,10 @@ public class ColorChannels {
 		r *= multiplier;
 		g *= multiplier;
 		b *= multiplier;
-		a = Mathe.clamp(a, 0.0f, 255.0f);
-		r = Mathe.clamp(r, 0.0f, 255.0f);
-		g = Mathe.clamp(g, 0.0f, 255.0f);
-		b = Mathe.clamp(b, 0.0f, 255.0f);
+		a = Mathi.clamp(a, 0.0f, 255.0f);
+		r = Mathi.clamp(r, 0.0f, 255.0f);
+		g = Mathi.clamp(g, 0.0f, 255.0f);
+		b = Mathi.clamp(b, 0.0f, 255.0f);
 		return assembleARGB((int) a, (int) r, (int) g, (int) b);
 	}
 
@@ -71,9 +71,9 @@ public class ColorChannels {
 		r *= amount;
 		g *= amount;
 		b *= amount;
-		r = Mathe.clamp(r, 0, 255);
-		g = Mathe.clamp(g, 0, 255);
-		b = Mathe.clamp(b, 0, 255);
+		r = Mathi.clamp(r, 0, 255);
+		g = Mathi.clamp(g, 0, 255);
+		b = Mathi.clamp(b, 0, 255);
 		return assembleARGB(getA(argb), r, g, b);
 	}
 	
@@ -84,9 +84,9 @@ public class ColorChannels {
 		r += amount;
 		g += amount;
 		b += amount;
-		r = Mathe.clamp(r, 0, 255);
-		g = Mathe.clamp(g, 0, 255);
-		b = Mathe.clamp(b, 0, 255);
+		r = Mathi.clamp(r, 0, 255);
+		g = Mathi.clamp(g, 0, 255);
+		b = Mathi.clamp(b, 0, 255);
 		return assembleARGB(getA(argb), r, g, b);
 	}
 
