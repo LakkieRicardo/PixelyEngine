@@ -3,6 +3,7 @@ package net.lakkie.test;
 import java.util.Random;
 
 import net.lakkie.pixely.app.Application;
+import net.lakkie.pixely.app.ExitCode;
 import net.lakkie.pixely.context.PixelyContext;
 import net.lakkie.pixely.entity.Entity;
 import net.lakkie.pixely.graphics.RenderEngine;
@@ -24,8 +25,6 @@ public class GameTest {
 	public static final Random rand = new Random();
 
 	public static void main(String[] args) {
-		Application.recordLoadStart(true);
-
 		// Create the render engine
 		new RenderEngineShaded(new Vector4(0, 0, width, height));
 
@@ -34,13 +33,16 @@ public class GameTest {
 
 		// Load sprites
 		Sprite spriteRed = new Sprite("/img/red.png", "red");
-		Sprite spriteBlank = new Sprite(0xff00ff00, width, height, "blank");
+		// Sprite spriteBlank = new Sprite(0xff00ff00, width, height, "blank");
+		Sprite spriteGreen = new Sprite("/img/test.png", "green");
 
 		// Load entities
 		Entity entity = new EntityPlayer(level, spriteRed, new Vector2(50, 50), "player");
 
 		// Load tiles
-		new Tile(level, spriteBlank, new Vector2(0, 0), "backdrop");
+		for (int i = 0; i < 1000; i++) {
+			new Tile(level, spriteGreen, rand.nextInt(2000) - 1000, rand.nextInt(2000) - 1000, "test-" + i);
+		}
 
 		// Create the context to store game variables in
 		PixelyContext context = new PixelyContext(new GameContextProvider());
@@ -91,7 +93,11 @@ public class GameTest {
 
 		});
 
+		Application.setExitDetails("Successfully closed");
+		Application.setExitCode(ExitCode.SUCCESS);
 		Application.start(context, jframe);
+
+		Application.exit();
 	}
 
 }

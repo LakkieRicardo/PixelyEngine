@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
+import java.io.OutputStream;
+import java.lang.management.ManagementFactory;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -18,19 +20,17 @@ import net.lakkie.pixely.utils.Colors;
 import net.lakkie.pixely.utils.DataRepresenter;
 import net.lakkie.pixely.window.Window;
 
-public class Application {
+public final class Application {
 
-	/*
-	 * TODO: Organize these variables, and document them!
-	 */
-	
-	private static boolean nanoLoadTime = false;
-	private static boolean recordLoadTime = false;
-	private static long startTime;
-	private static Canvas c;
-	public static PixelyContext ctx;
-	public static int targetWidth, targetHeight;
+	// Public
 	public static Window<?> currentWindow;
+	public static PixelyContext ctx;
+	public static int targetWidth;
+	public static int targetHeight;
+	public static RenderEngine renderEngine;
+
+	// Private
+	private static Canvas c;
 	private static String normTitle;
 	private static Updatable update;
 	private static Updatable postUpdate;
@@ -43,20 +43,19 @@ public class Application {
 	private static int spritesOnScreen;
 	private static int loop_Frames, loop_Updates;
 	private static Runnable firstStart;
-	public static RenderEngine renderEngine;
+	private static ExitDetails exitDetails;
+	private static ExitCode code;
 
-	public static void exit(ExitCode code) {
+	public static void exit() {
+		stop(code);
 		System.exit(code.getCode());
 	}
 
+	public static void setExitCode(ExitCode code) {
+		Application.code = code;
+	}
+
 	public static void start(PixelyContext context, Window<?> window) {
-		if (recordLoadTime) {
-			if (nanoLoadTime) {
-				logLoadTime(System.nanoTime() - startTime);
-			} else {
-				logLoadTime(System.currentTimeMillis() - startTime);
-			}
-		}
 		c = context.getCanvas();
 		ctx = context;
 		targetWidth = context.getWidth();
@@ -71,6 +70,7 @@ public class Application {
 			firstStart.run();
 		}
 		renderEngine.firstStart();
+		logLoadTime(System.currentTimeMillis() - ManagementFactory.getRuntimeMXBean().getStartTime());
 		startLoop();
 	}
 
@@ -169,29 +169,9 @@ public class Application {
 	}
 
 	private static void logLoadTime(long delta) {
-		if (nanoLoadTime) {
-			double seconds = delta;
-			seconds /= 1000000000.0D;
-			System.out.println("Loading took " + delta + " nanoseconds, or " + seconds + " seconds.");
-		} else {
-			double seconds = delta;
-			seconds /= 1000.0D;
-			System.out.println("Loading took " + delta + " milliseconds, or " + seconds + " seconds.");
-		}
-	}
-
-	public static void recordLoadStart(boolean nanoAccurate) {
-		nanoLoadTime = nanoAccurate;
-		recordLoadTime = true;
-		if (nanoLoadTime) {
-			startTime = System.nanoTime();
-		} else {
-			startTime = System.currentTimeMillis();
-		}
-	}
-
-	public static boolean isNanoAccurate() {
-		return nanoLoadTime;
+		double seconds = delta;
+		seconds /= 1000.0D;
+		System.out.println("Loading took " + delta + " milliseconds, or " + seconds + " seconds.");
 	}
 
 	public static void requestClose() {
@@ -231,17 +211,37 @@ public class Application {
 	public static Set<Updatable> getUpdatables() {
 		return Application.updates;
 	}
-	
+
 	public static Set<Updatable> getPostUpdatables() {
 		return postUpdates;
 	}
-	
+
 	public static void registerSpriteRender() {
 		spritesOnScreen++;
 	}
-	
+
 	public static void setFirstStart(Runnable r) {
 		firstStart = r;
+	}
+
+	/**
+	 * Sets the exit details to be called during the exit of the application.
+	 * 
+	 * @param exitDetails
+	 */
+	public static void setExitDetails(String details) {
+		setExitDetails(details, System.out);
+	}
+
+	public static void setExitDetails(String details, OutputStream out) {
+		Application.exitDetails = new ExitDetails(details, out);
+	}
+
+	private static void stop(ExitCode code) {
+		System.out.println("Exit code: " + code.toString());
+		if (exitDetails != null) {
+			Application.exitDetails.printDetails();
+		}
 	}
 
 }

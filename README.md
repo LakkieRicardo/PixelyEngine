@@ -43,3 +43,6 @@ Here we try to keep things as generic as possible. We take no shortcuts.
 * Animations
 * File utility
 * Advanced memory management using JNI
+* Modification loading
+* Modification languages
+* Modification API
