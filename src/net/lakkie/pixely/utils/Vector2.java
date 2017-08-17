@@ -23,29 +23,47 @@ public class Vector2 {
 	}
 
 	public Vector2 add(Vector2 other) {
-		this.x += other.x;
-		this.y += other.y;
-		return this;
+		Vector2 result = new Vector2(this);
+		result.x += other.x;
+		result.y += other.y;
+		return result;
 	}
 
 	public Vector2 subtract(Vector2 other) {
-		this.x -= other.x;
-		this.y -= other.y;
-		return this;
+		Vector2 result = new Vector2(this);
+		result.x -= other.x;
+		result.y -= other.y;
+		return result;
 	}
 
 	public Vector2 multiply(Vector2 other) {
-		this.x *= other.x;
-		this.y *= other.y;
-		return this;
+		Vector2 result = new Vector2(this);
+		result.x *= other.x;
+		result.y *= other.y;
+		return result;
 	}
 
 	public Vector2 divide(Vector2 other) {
-		this.x /= other.x;
-		this.y /= other.y;
-		return this;
+		Vector2 result = new Vector2(this);
+		result.x /= other.x;
+		result.y /= other.y;
+		return result;
 	}
-	
+
+	public Vector2 modulus(Vector2 other) {
+		Vector2 result = new Vector2(this);
+		result.x %= other.x;
+		result.y %= other.y;
+		return result;
+	}
+
+	/**
+	 * An alias for {@link Vector2#modulus(Vector2)}
+	 */
+	public Vector2 remainder(Vector2 other) {
+		return modulus(other);
+	}
+
 	public boolean equals(Object obj) {
 		if (!(obj instanceof Vector2)) {
 			return obj == this;
@@ -53,8 +71,8 @@ public class Vector2 {
 		Vector2 other = (Vector2) obj;
 		return this.x == other.x && this.y == other.y;
 	}
-	
-	public int size() {
+
+	public int length() {
 		return this.x + this.y;
 	}
 

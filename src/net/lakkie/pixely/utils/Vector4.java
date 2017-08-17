@@ -7,6 +7,13 @@ public class Vector4 {
 	public Vector4() {
 	}
 	
+	public Vector4(Vector2 pos, Vector2 size) {
+		this.x = pos.x;
+		this.y = pos.y;
+		this.w = size.x;
+		this.h = size.y;
+	}
+	
 	public Vector4(int x, int y, int w, int h) {
 		this.x = x;
 		this.y = y;

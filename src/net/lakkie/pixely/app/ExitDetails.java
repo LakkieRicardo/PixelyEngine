@@ -37,7 +37,7 @@ public class ExitDetails {
 	public boolean shouldPrint() {
 		return print;
 	}
-
+	
 	private void printDetails0() {
 		String string = (String) details;
 		try {

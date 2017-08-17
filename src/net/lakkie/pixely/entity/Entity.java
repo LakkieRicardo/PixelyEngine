@@ -3,7 +3,7 @@ package net.lakkie.pixely.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.lakkie.pixely.app.Application;
+import net.lakkie.pixely.collision.ICollisionProvider;
 import net.lakkie.pixely.context.PixelyContext;
 import net.lakkie.pixely.graphics.tex.Sprite;
 import net.lakkie.pixely.i.EntityRenderer;
@@ -14,10 +14,11 @@ import net.lakkie.pixely.utils.Nameable;
 import net.lakkie.pixely.utils.Registry;
 import net.lakkie.pixely.utils.Vector2;
 
-public abstract class Entity implements Updatable, Renderable, Nameable {
+public class Entity implements Updatable, Renderable, Nameable, ICollisionProvider {
 
 	public static final Registry<Entity> entities = new Registry<Entity>();
 	public Vector2 pos;
+	public Vector2 velocity;
 	public String name;
 	public List<EntityAttachment> attachments;
 	public EntityRenderer renderer;
@@ -30,9 +31,15 @@ public abstract class Entity implements Updatable, Renderable, Nameable {
 		this.attachments = new ArrayList<EntityAttachment>();
 		EntityRenderer renderer = getEntityRenderer(sprite);
 		this.renderer = renderer == null ? new DefaultEntityRenderer(sprite) : renderer;
-		Application.getUpdatables().add(this);
-		Application.getPostUpdatables().add(this);
 		entities.submit(this);
+	}
+
+	public void addForce(Vector2 force) {
+		applyForce(force);
+	}
+	
+	public Vector2 getMovementSpeed() {
+		return this.velocity;
 	}
 
 	/**
@@ -87,6 +94,10 @@ public abstract class Entity implements Updatable, Renderable, Nameable {
 		return null;
 	}
 	
+	public void add(EntityAttachment attach) {
+		this.attachments.add(attach);
+	}
+	
 	public String getName() {
 		return this.name;
 	}
@@ -104,7 +115,7 @@ public abstract class Entity implements Updatable, Renderable, Nameable {
 	}
 
 	public final void translate(Vector2 translation) {
-		this.pos.add(translation);
+		this.pos = this.pos + translation;
 	}
 
 	public final void update(PixelyContext ctx) {
@@ -119,10 +130,15 @@ public abstract class Entity implements Updatable, Renderable, Nameable {
 	}
 
 	public final void postUpdate(PixelyContext ctx) {
+		this.pos.add(this.velocity);
 		onPostUpdate(ctx);
 		for (EntityAttachment attach : this.attachments) {
 			attach.postUpdate(ctx);
 		}
+	}
+	
+	public void applyForce(Vector2 force) {
+		this.velocity.add(force);
 	}
 
 	public void render(PixelyContext context) {

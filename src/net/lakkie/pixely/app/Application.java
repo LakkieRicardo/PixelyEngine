@@ -16,6 +16,7 @@ import net.lakkie.pixely.graphics.RenderEngine;
 import net.lakkie.pixely.i.Renderable;
 import net.lakkie.pixely.i.Updatable;
 import net.lakkie.pixely.input.InputManager;
+import net.lakkie.pixely.logging.LogUtils;
 import net.lakkie.pixely.utils.Colors;
 import net.lakkie.pixely.utils.DataRepresenter;
 import net.lakkie.pixely.window.Window;
@@ -171,7 +172,7 @@ public final class Application {
 	private static void logLoadTime(long delta) {
 		double seconds = delta;
 		seconds /= 1000.0D;
-		System.out.println("Loading took " + delta + " milliseconds, or " + seconds + " seconds.");
+		LogUtils.get().info("Loading took " + delta + " milliseconds, or " + seconds + " seconds.");
 	}
 
 	public static void requestClose() {
@@ -238,9 +239,11 @@ public final class Application {
 	}
 
 	private static void stop(ExitCode code) {
-		System.out.println("Exit code: " + code.toString());
+		if (code != null) {
+			LogUtils.info("Exit code: %s", code);
+		}
 		if (exitDetails != null) {
-			Application.exitDetails.printDetails();
+			LogUtils.info(exitDetails.getDetails());
 		}
 	}
 

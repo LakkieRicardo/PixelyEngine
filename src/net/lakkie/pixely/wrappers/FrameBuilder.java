@@ -9,6 +9,7 @@ import net.lakkie.pixely.exceptions.BuilderException;
 import net.lakkie.pixely.exceptions.ReflectionCastException;
 import net.lakkie.pixely.i.IAbstractWindow;
 import net.lakkie.pixely.input.InputRegistry;
+import net.lakkie.pixely.logging.LogUtils;
 
 public class FrameBuilder {
 
@@ -215,7 +216,7 @@ public class FrameBuilder {
 				frame.getClass().getMethod("setLocationRelativeTo", java.awt.Component.class).invoke(frame, new Object[] { null });
 			}
 		} catch (Exception e) {
-			System.out.println("WARNING: Unable to center frame of type " + frame.getClass().getName());
+			LogUtils.get().info("WARNING: Unable to center frame of type " + frame.getClass().getName());
 		}
 		
 	}

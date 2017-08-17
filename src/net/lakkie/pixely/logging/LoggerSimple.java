@@ -7,12 +7,15 @@ import java.util.logging.Logger;
 public class LoggerSimple extends Logger {
 
 	public LoggerSimple() {
-		super("Main", "PixelyLibs");
+		super("Main", null);
 	}
 
 	public void log(LogRecord record) {
 		if (record.getLevel() == Level.OFF)
 			return;
+		if (!record.getMessage().endsWith("\n")) {
+			record.setMessage(record.getMessage() + "\n");
+		}
 		printf("(%s)[%s]: %s", LogUtils.getDateString(), record.getLevel().getLocalizedName(), record.getMessage());
 	}
 

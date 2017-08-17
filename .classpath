@@ -3,7 +3,8 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="libs"/>
 	<classpathentry kind="src" path="res"/>
+	<classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="libs/SimpleSerialization.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/SimpleSerialization.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

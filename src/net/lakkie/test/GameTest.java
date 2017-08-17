@@ -5,7 +5,7 @@ import java.util.Random;
 import net.lakkie.pixely.app.Application;
 import net.lakkie.pixely.app.ExitCode;
 import net.lakkie.pixely.context.PixelyContext;
-import net.lakkie.pixely.entity.Entity;
+import net.lakkie.pixely.entity.defaults.input.AttachmentController;
 import net.lakkie.pixely.graphics.RenderEngine;
 import net.lakkie.pixely.graphics.RenderEngineResizeMode;
 import net.lakkie.pixely.graphics.renders.RenderEngineShaded;
@@ -14,6 +14,7 @@ import net.lakkie.pixely.input.Buttons;
 import net.lakkie.pixely.input.InputManager;
 import net.lakkie.pixely.level.Level;
 import net.lakkie.pixely.level.Tile;
+import net.lakkie.pixely.utils.MovementInputLayout;
 import net.lakkie.pixely.utils.Vector2;
 import net.lakkie.pixely.utils.Vector4;
 import net.lakkie.pixely.window.JFrameWindow;
@@ -37,7 +38,8 @@ public class GameTest {
 		Sprite spriteGreen = new Sprite("/img/test.png", "green");
 
 		// Load entities
-		Entity entity = new EntityPlayer(level, spriteRed, new Vector2(50, 50), "player");
+		EntityPlayer player = new EntityPlayer(level, spriteRed, new Vector2(50, 50), "player");
+		player.add(new AttachmentController(3, MovementInputLayout.WASD));
 
 		// Load tiles
 		for (int i = 0; i < 1000; i++) {
@@ -52,7 +54,7 @@ public class GameTest {
 		// Show the window
 		jframe.show();
 
-		entity.start(context);
+		player.start(context);
 
 		// Get the current render engine
 		RenderEngine engine = (RenderEngine) context.get(PixelyContext.renderEngine);
@@ -73,6 +75,9 @@ public class GameTest {
 			if (InputManager.isKeyFirstDown(Buttons.VK_F1)) {
 				ctx.set(PixelyContext.debug, !ctx.isDebugActive());
 			}
+
+			player.update(ctx);
+			
 		});
 
 		Application.setRender((ctx) -> {
@@ -89,7 +94,7 @@ public class GameTest {
 				engine.renderTile(tile);
 			}
 
-			engine.renderEntity(entity);
+			engine.renderEntity(player);
 
 		});
 
