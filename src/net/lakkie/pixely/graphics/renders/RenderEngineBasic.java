@@ -5,7 +5,7 @@ import net.lakkie.pixely.entity.Entity;
 import net.lakkie.pixely.graphics.RenderEngine;
 import net.lakkie.pixely.graphics.tex.Sprite;
 import net.lakkie.pixely.level.Tile;
-import net.lakkie.pixely.utils.Vector4;
+import net.lakkie.pixely.math.Vector4;
 
 public class RenderEngineBasic extends RenderEngine {
 

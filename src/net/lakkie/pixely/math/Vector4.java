@@ -1,4 +1,4 @@
-package net.lakkie.pixely.utils;
+package net.lakkie.pixely.math;
 
 public class Vector4 {
 
@@ -7,7 +7,7 @@ public class Vector4 {
 	public Vector4() {
 	}
 	
-	public Vector4(Vector2 pos, Vector2 size) {
+	public Vector4(Vector2i pos, Vector2i size) {
 		this.x = pos.x;
 		this.y = pos.y;
 		this.w = size.x;
@@ -77,12 +77,12 @@ public class Vector4 {
 		return new Vector4(Math.abs(x), Math.abs(y), Math.abs(w), Math.abs(h));
 	}
 	
-	public Vector2 toSizeVector() {
-		return new Vector2(this.w, this.h);
+	public Vector2i toSizeVector() {
+		return new Vector2i(this.w, this.h);
 	}
 	
-	public Vector2 toPositionVector() {
-		return new Vector2(this.x, this.y);
+	public Vector2i toPositionVector() {
+		return new Vector2i(this.x, this.y);
 	}
 	
 	public String toString() {

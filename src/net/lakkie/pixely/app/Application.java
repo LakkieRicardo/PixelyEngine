@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import net.lakkie.pixely.context.PixelyContext;
+import net.lakkie.pixely.entity.Entity;
 import net.lakkie.pixely.graphics.RenderEngine;
 import net.lakkie.pixely.i.Renderable;
 import net.lakkie.pixely.i.Updatable;
@@ -29,6 +30,10 @@ public final class Application {
 	public static int targetWidth;
 	public static int targetHeight;
 	public static RenderEngine renderEngine;
+	/**
+	 * A {@link Graphics2D} object that represents the latest render's graphics
+	 */
+	public static Graphics graphics;
 
 	// Private
 	private static Canvas c;
@@ -49,7 +54,11 @@ public final class Application {
 
 	public static void exit() {
 		stop(code);
-		System.exit(code.getCode());
+		if (code == null) {
+			System.exit(ExitCode.SUCCESS.getCode());
+		} else {
+			System.exit(code.getCode());
+		}
 	}
 
 	public static void setExitCode(ExitCode code) {
@@ -72,6 +81,9 @@ public final class Application {
 		}
 		renderEngine.firstStart();
 		logLoadTime(System.currentTimeMillis() - ManagementFactory.getRuntimeMXBean().getStartTime());
+		for (Entity entity : Entity.entities) {
+			entity.start(ctx);
+		}
 		startLoop();
 	}
 
@@ -80,8 +92,10 @@ public final class Application {
 			update.update(ctx);
 		}
 
-		for (Updatable update : updates) {
-			update.update(ctx);
+		if (updates.size() > 0) {
+			for (Updatable update : updates) {
+				update.update(ctx);
+			}
 		}
 
 		c.setSize(targetWidth, targetHeight);
@@ -94,12 +108,18 @@ public final class Application {
 		if (postUpdate != null) {
 			postUpdate.update(ctx);
 		}
+		if (postUpdates.size() > 0) {
+			for (Updatable update : postUpdates) {
+				update.update(ctx);
+			}
+		}
 		spritesOnScreen = 0;
 	}
 
 	private static void render() {
 		BufferStrategy bs = c.getBufferStrategy();
 		Graphics g = (Graphics2D) bs.getDrawGraphics();
+		Application.graphics = g;
 		ctx.set(PixelyContext.graphics, g);
 
 		clear(g, Colors.light_blue);

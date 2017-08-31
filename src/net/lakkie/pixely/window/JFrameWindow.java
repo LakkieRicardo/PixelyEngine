@@ -9,7 +9,7 @@ import javax.swing.WindowConstants;
 import net.lakkie.pixely.app.Application;
 import net.lakkie.pixely.context.PixelyContext;
 import net.lakkie.pixely.input.InputRegistry;
-import net.lakkie.pixely.utils.Vector4;
+import net.lakkie.pixely.math.Vector4;
 
 public class JFrameWindow extends Window<JFrame> implements WindowListener {
 

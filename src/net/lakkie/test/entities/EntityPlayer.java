@@ -7,11 +7,11 @@ import net.lakkie.pixely.i.EntityRenderer;
 import net.lakkie.pixely.input.Buttons;
 import net.lakkie.pixely.input.InputManager;
 import net.lakkie.pixely.level.Level;
-import net.lakkie.pixely.utils.Vector2;
+import net.lakkie.pixely.math.Vector2i;
 
 public class EntityPlayer extends Entity {
 
-	public EntityPlayer(Level level, Sprite sprite, Vector2 pos, String name) {
+	public EntityPlayer(Level level, Sprite sprite, Vector2i pos, String name) {
 		super(level, sprite, pos, name);
 	}
 
@@ -28,7 +28,7 @@ public class EntityPlayer extends Entity {
 	}
 
 	public void onUpdate(PixelyContext ctx) {
-		Vector2 translation = new Vector2();
+		Vector2i translation = new Vector2i();
 		int speed = InputManager.isKeyPressed(Buttons.VK_SHIFT) ? 2 : 1;
 		if (InputManager.isKeyPressed(Buttons.VK_W)) {
 			translation.y -= speed;

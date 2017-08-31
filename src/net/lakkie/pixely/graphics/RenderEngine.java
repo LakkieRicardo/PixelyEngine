@@ -6,10 +6,10 @@ import java.awt.image.DataBufferInt;
 import net.lakkie.pixely.entity.Entity;
 import net.lakkie.pixely.graphics.tex.Sprite;
 import net.lakkie.pixely.level.Tile;
+import net.lakkie.pixely.math.Vector2i;
+import net.lakkie.pixely.math.Vector4;
 import net.lakkie.pixely.utils.Nameable;
 import net.lakkie.pixely.utils.Registry;
-import net.lakkie.pixely.utils.Vector2;
-import net.lakkie.pixely.utils.Vector4;
 
 public abstract class RenderEngine implements Nameable {
 
@@ -48,16 +48,16 @@ public abstract class RenderEngine implements Nameable {
 	private void resize(Vector4 newView) {
 		switch (resizeMode) {
 		case PADDING_ALL_DIRECTIONS:
-			Vector2 diff = new Vector4(newView).subtract(new Vector4(this.viewport)).toSizeVector();
+			Vector2i diff = new Vector4(newView).subtract(new Vector4(this.viewport)).toSizeVector();
 			int padX = diff.x / 2;
 			int padY = diff.y / 2;
 			this.viewport = new Vector4(this.viewport.x - padX, this.viewport.y - padY, newView.w + padX,
 					newView.h + padY);
 
 			// Remainder handling
-			Vector2 remain = this.viewport.toSizeVector();
+			Vector2i remain = this.viewport.toSizeVector();
 			remain.subtract(newView.toSizeVector());
-			if (!remain.equals(new Vector2())) {
+			if (!remain.equals(new Vector2i())) {
 
 				if (remain.x % 2 == 0) {
 					// Fill in X

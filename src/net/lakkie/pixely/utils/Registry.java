@@ -30,6 +30,11 @@ public class Registry<T extends Nameable> implements Iterable<T> {
 		return new HashSet<T>(elems);
 	}
 	
+	/**
+	 * Finds an object with a name of <tt>name</tt>
+	 * @param name The name of the object
+	 * @return Null if no object was found, an object if one was found.
+	 */
 	public T get(String name, boolean ignoreCase) {
 		Iterator<T> it = elems.iterator();
 		while (it.hasNext()) {

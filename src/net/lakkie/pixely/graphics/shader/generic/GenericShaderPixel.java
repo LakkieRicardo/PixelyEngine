@@ -6,8 +6,8 @@ import net.lakkie.pixely.graphics.shader.generic.enums.GenericLightingGeneration
 import net.lakkie.pixely.graphics.shader.generic.enums.GenericLightingMode;
 import net.lakkie.pixely.graphics.shader.i.IShaderComponentPixel;
 import net.lakkie.pixely.graphics.tex.Sprite;
+import net.lakkie.pixely.math.Vector2i;
 import net.lakkie.pixely.utils.ColorChannels;
-import net.lakkie.pixely.utils.Vector2;
 
 public class GenericShaderPixel extends GenericShaderComponentBase implements IShaderComponentPixel {
 
@@ -53,7 +53,7 @@ public class GenericShaderPixel extends GenericShaderComponentBase implements IS
 		return color;
 	}
 
-	public static int getShaderDistance(Vector2 lightSource, int vx, int vy) {
+	public static int getShaderDistance(Vector2i lightSource, int vx, int vy) {
 		int dx = lightSource.x - vx;
 		int dy = lightSource.y - vy;
 

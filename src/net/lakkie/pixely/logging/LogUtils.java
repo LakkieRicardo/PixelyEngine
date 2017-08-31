@@ -18,7 +18,15 @@ public class LogUtils {
 	
 	public static void info(Object msg) {
 		runAction();
-		get().info(msg.toString());
+		Logger logger = get();
+		if (logger == null) { // Scala is sensitive about null checks, it throws a NullPointer if no null check, or it could be something else
+			return;
+		}
+		if (msg == null) {
+			logger.info("null");
+			return;
+		}
+		logger.info(msg.toString());
 	}
 	
 	public static void info(String msg, Object... args) {

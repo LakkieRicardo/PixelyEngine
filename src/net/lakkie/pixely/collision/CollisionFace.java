@@ -1,6 +1,6 @@
 package net.lakkie.pixely.collision;
 
-import net.lakkie.pixely.utils.Vector2;
+import net.lakkie.pixely.math.Vector2i;
 
 public enum CollisionFace {
 
@@ -9,14 +9,14 @@ public enum CollisionFace {
 	/**
 	 * Modifier of to use multiply when colliding
 	 */
-	private final Vector2 m;
+	private final Vector2i m;
 
 	private CollisionFace(int mx, int my) {
-		this.m = new Vector2(mx, my);
+		this.m = new Vector2i(mx, my);
 	}
 	
-	public Vector2 getMultiplier() {
-		return new Vector2(this.m);
+	public Vector2i getMultiplier() {
+		return new Vector2i(this.m);
 	}
 
 }

@@ -4,7 +4,7 @@ import static net.lakkie.pixely.app.Application.*;
 
 import java.awt.Graphics2D;
 
-import net.lakkie.pixely.utils.Vector2;
+import net.lakkie.pixely.math.Vector2i;
 
 /**
  * 
@@ -41,12 +41,12 @@ public class PixelScaler {
 		return (float) (targetHeight) / (float) (renderEngine.viewport.h);
 	}
 
-	public static Vector2 levelPointToScreenPoint(Vector2 point) {
+	public static Vector2i levelPointToScreenPoint(Vector2i point) {
 		float lx = (float) point.x;
 		float ly = (float) point.y;
 		lx *= sy();
 		ly *= sy();
-		return new Vector2((int) lx, (int) ly);
+		return new Vector2i((int) lx, (int) ly);
 	}
 
 }

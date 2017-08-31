@@ -6,8 +6,8 @@ import net.lakkie.pixely.graphics.shader.ShaderProgram;
 import net.lakkie.pixely.graphics.shader.generic.GenericShader;
 import net.lakkie.pixely.graphics.tex.Sprite;
 import net.lakkie.pixely.level.Tile;
-import net.lakkie.pixely.utils.Vector2;
-import net.lakkie.pixely.utils.Vector4;
+import net.lakkie.pixely.math.Vector2i;
+import net.lakkie.pixely.math.Vector4;
 
 /**
  * 
@@ -24,7 +24,7 @@ public class RenderEngineShaded extends RenderEngine {
 	public static final String name = "shaded";
 
 	private ShaderProgram shader;
-	public Vector2 lightSource = new Vector2(400, 200);
+	public Vector2i lightSource = new Vector2i(400, 200);
 	
 	public RenderEngineShaded(Vector4 viewport, ShaderProgram assembledShader) {
 		super(viewport, name);

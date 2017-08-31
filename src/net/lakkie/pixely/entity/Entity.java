@@ -10,35 +10,37 @@ import net.lakkie.pixely.i.EntityRenderer;
 import net.lakkie.pixely.i.Renderable;
 import net.lakkie.pixely.i.Updatable;
 import net.lakkie.pixely.level.Level;
+import net.lakkie.pixely.math.Vector2i;
 import net.lakkie.pixely.utils.Nameable;
 import net.lakkie.pixely.utils.Registry;
-import net.lakkie.pixely.utils.Vector2;
 
 public class Entity implements Updatable, Renderable, Nameable, ICollisionProvider {
 
 	public static final Registry<Entity> entities = new Registry<Entity>();
-	public Vector2 pos;
-	public Vector2 velocity;
+	public Vector2i pos;
+	public Vector2i velocity;
 	public String name;
 	public List<EntityAttachment> attachments;
 	public EntityRenderer renderer;
 	public Level level;
+	public boolean isPositionLate = false;
 
-	public Entity(Level level, Sprite sprite, Vector2 pos, String name) {
+	public Entity(Level level, Sprite sprite, Vector2i pos, String name) {
 		this.level = level;
 		this.pos = pos;
 		this.name = name;
 		this.attachments = new ArrayList<EntityAttachment>();
 		EntityRenderer renderer = getEntityRenderer(sprite);
 		this.renderer = renderer == null ? new DefaultEntityRenderer(sprite) : renderer;
+		this.velocity = new Vector2i();
 		entities.submit(this);
 	}
 
-	public void addForce(Vector2 force) {
+	public void addForce(Vector2i force) {
 		applyForce(force);
 	}
 	
-	public Vector2 getMovementSpeed() {
+	public Vector2i getMovementSpeed() {
 		return this.velocity;
 	}
 
@@ -95,6 +97,7 @@ public class Entity implements Updatable, Renderable, Nameable, ICollisionProvid
 	}
 	
 	public void add(EntityAttachment attach) {
+		attach.entity = this;
 		this.attachments.add(attach);
 	}
 	
@@ -114,11 +117,12 @@ public class Entity implements Updatable, Renderable, Nameable, ICollisionProvid
 		}
 	}
 
-	public final void translate(Vector2 translation) {
-		this.pos = this.pos + translation;
+	public final void translate(Vector2i translation) {
+		this.pos = this.pos.add(translation);
 	}
 
 	public final void update(PixelyContext ctx) {
+		this.isPositionLate = false;
 		onPreUpdate(ctx);
 		for (EntityAttachment attach : this.attachments) {
 			attach.preUpdate(ctx);
@@ -130,19 +134,32 @@ public class Entity implements Updatable, Renderable, Nameable, ICollisionProvid
 	}
 
 	public final void postUpdate(PixelyContext ctx) {
-		this.pos.add(this.velocity);
+		this.pos = this.pos.add(this.velocity);
+		this.isPositionLate = true;
 		onPostUpdate(ctx);
 		for (EntityAttachment attach : this.attachments) {
 			attach.postUpdate(ctx);
 		}
 	}
 	
-	public void applyForce(Vector2 force) {
-		this.velocity.add(force);
+	public void applyForce(Vector2i force) {
+		this.velocity = this.velocity.add(force);
 	}
 
 	public void render(PixelyContext context) {
 		this.renderer.render(context, this);
+	}
+
+	public Vector2i getPositionLate() {
+		if (this.pos == null) {
+			return new Vector2i();
+		}
+		
+		if (this.isPositionLate) {
+			return this.pos;
+		} else {
+			return this.pos.add(this.velocity);
+		}
 	}
 
 }

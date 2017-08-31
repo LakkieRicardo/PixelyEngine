@@ -1,7 +1,7 @@
 package net.lakkie.pixely.collision;
 
-import net.lakkie.pixely.utils.Vector2;
-import net.lakkie.pixely.utils.Vector4;
+import net.lakkie.pixely.math.Vector2i;
+import net.lakkie.pixely.math.Vector4;
 
 public final class CollisionService {
 
@@ -56,16 +56,16 @@ public final class CollisionService {
 	private static boolean testMin(int min, int input) {
 		return inclusiveCollision ? input <= min : input < min;
 	}
-	
+
 	public static boolean isColliderNearby(Collider origin, Collider other) {
-		Vector2 delta = other.getBox().toPositionVector().subtract(origin.getBox().toPositionVector());
+		Vector2i delta = other.getBox().toPositionVector().subtract(origin.getBox().toPositionVector());
 		if (delta.length() <= 0) {
 			// TODO: Handle for other is top/left/both
-			delta = delta.toAbsoluteVector();
+			delta = delta.abs();
 			return delta.x <= origin.getBox().w + 1 && delta.y <= origin.getBox().h + 1;
 		} else {
 			// TODO: Handle for other is bottom/right/both
-			delta = delta.toAbsoluteVector();
+			delta = delta.abs();
 			return delta.x <= other.getBox().w + 1 && delta.y <= other.getBox().h + 1;
 		}
 	}

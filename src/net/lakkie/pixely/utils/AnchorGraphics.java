@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 import net.lakkie.pixely.app.Application;
+import net.lakkie.pixely.math.Vector2i;
 
 public class AnchorGraphics {
 
@@ -13,11 +14,11 @@ public class AnchorGraphics {
 		AnchorGraphics.anchors = anchors;
 	}
 
-	public static Vector2 addAnchors() {
+	public static Vector2i addAnchors() {
 		if (anchors == null || anchors.length < 1) {
-			return new Vector2();
+			return new Vector2i();
 		}
-		Vector2 result = new Vector2();
+		Vector2i result = new Vector2i();
 		for (int i = 0; i < anchors.length; i++) {
 			result.add(anchors[i].asVec());
 		}
@@ -25,23 +26,23 @@ public class AnchorGraphics {
 	}
 	
 	public static void drawImage(Graphics g, Image image, int x, int y, int width, int height) {
-		Vector2 anchor = getAnchorPos();
+		Vector2i anchor = getAnchorPos();
 		g.drawImage(image, x + anchor.x, y + anchor.y, width, height, null);
 	}
 	
 	public static void drawRect(Graphics g, int x, int y, int width, int height) {
-		Vector2 anchor = getAnchorPos();
+		Vector2i anchor = getAnchorPos();
 		g.fillRect(x + anchor.x, y + anchor.y, width, height);
 	}
 	
 	public static void drawCircle(Graphics g, int x, int y, int width, int height, int arc) {
-		Vector2 anchor = getAnchorPos();
+		Vector2i anchor = getAnchorPos();
 		g.fillRoundRect(x + anchor.x, y + anchor.y, width, height, arc, arc);
 	}
 
-	public static Vector2 getAnchorPos() {
-		Vector2 anchor = addAnchors();
-		Vector2 r = new Vector2();
+	public static Vector2i getAnchorPos() {
+		Vector2i anchor = addAnchors();
+		Vector2i r = new Vector2i();
 		switch (anchor.x) {
 		case -1:
 			r.x = 0;
