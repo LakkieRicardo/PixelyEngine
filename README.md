@@ -1,8 +1,9 @@
 # PixelyEngine
+
 A pixel based high level game engine.
 
 This game engine is based off of Java's idea, which is build once, run anywhere... or something like that.
-This is intended to be supported to run on any frame.
+This is intended to be supported to run on any platform.
 Here we try to keep things as generic as possible. We take no shortcuts.
 
 
@@ -46,5 +47,4 @@ Here we try to keep things as generic as possible. We take no shortcuts.
 * Modification loading
 * Modification languages
 * Modification API
-* Modification support in Java
-* Move Modification libraries to a seperate directory
+* Modification support in Java and JavaScript(nashorn lib)
