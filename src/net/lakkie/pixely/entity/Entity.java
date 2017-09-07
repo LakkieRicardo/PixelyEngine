@@ -3,7 +3,6 @@ package net.lakkie.pixely.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.lakkie.pixely.collision.ICollisionProvider;
 import net.lakkie.pixely.context.PixelyContext;
 import net.lakkie.pixely.graphics.tex.Sprite;
 import net.lakkie.pixely.i.EntityRenderer;
@@ -14,7 +13,7 @@ import net.lakkie.pixely.math.Vector2i;
 import net.lakkie.pixely.utils.Nameable;
 import net.lakkie.pixely.utils.Registry;
 
-public class Entity implements Updatable, Renderable, Nameable, ICollisionProvider {
+public class Entity implements Updatable, Renderable, Nameable {
 
 	public static final Registry<Entity> entities = new Registry<Entity>();
 	public Vector2i pos;

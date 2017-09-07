@@ -18,6 +18,7 @@ import net.lakkie.pixely.i.Renderable;
 import net.lakkie.pixely.i.Updatable;
 import net.lakkie.pixely.input.InputManager;
 import net.lakkie.pixely.logging.LogUtils;
+import net.lakkie.pixely.mods.js.JSLoader;
 import net.lakkie.pixely.utils.Colors;
 import net.lakkie.pixely.utils.DataRepresenter;
 import net.lakkie.pixely.window.Window;
@@ -265,6 +266,10 @@ public final class Application {
 		if (exitDetails != null) {
 			LogUtils.info(exitDetails.getDetails());
 		}
+	}
+
+	public static void loadMods() {
+		JSLoader.evalScript("");
 	}
 
 }

@@ -4,7 +4,6 @@ import java.util.Random;
 
 import net.lakkie.pixely.app.Application;
 import net.lakkie.pixely.app.ExitCode;
-import net.lakkie.pixely.collision.Collider;
 import net.lakkie.pixely.context.PixelyContext;
 import net.lakkie.pixely.entity.defaults.input.AttachmentController;
 import net.lakkie.pixely.graphics.RenderEngine;
@@ -61,8 +60,8 @@ public class GameTest {
 		// Get the current render engine
 		RenderEngine engine = (RenderEngine) context.get(PixelyContext.renderEngine);
 		
-		new Collider(new Vector2i(0, 0), new Vector2i(16, 16), player);
-
+		Application.loadMods();
+		
 		Application.setUpdate((ctx) -> {
 			/*
 			 * Update clause
@@ -80,9 +79,6 @@ public class GameTest {
 			}
 
 			player.update(ctx);
-			for (Collider collider : Collider.getColliders()) {
-				collider.updatePositionWithProvider();
-			}
 			body.update(ctx);
 			
 		});
@@ -112,14 +108,6 @@ public class GameTest {
 
 		});
 		
-		Application.setUIRenderable((ctx) -> {
-			
-			for (Collider collider : Collider.getColliders()) {
-				ColliderGraphics.drawCollider(collider, Application.graphics);
-			}
-			
-		});
-
 		Application.setExitDetails("Successfully closed");
 		Application.setExitCode(ExitCode.SUCCESS);
 		Application.start(context, jframe);

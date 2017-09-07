@@ -16,7 +16,7 @@ public class Registry<T extends Nameable> implements Iterable<T> {
 			}
 		}
 	}
-	
+
 	public Registry() {
 		this(null);
 	}
@@ -29,10 +29,12 @@ public class Registry<T extends Nameable> implements Iterable<T> {
 	public Set<T> getElements() {
 		return new HashSet<T>(elems);
 	}
-	
+
 	/**
 	 * Finds an object with a name of <tt>name</tt>
-	 * @param name The name of the object
+	 * 
+	 * @param name
+	 *            The name of the object
 	 * @return Null if no object was found, an object if one was found.
 	 */
 	public T get(String name, boolean ignoreCase) {
@@ -49,22 +51,44 @@ public class Registry<T extends Nameable> implements Iterable<T> {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Defaults to ignoreCase being true.
-	 * @param name The name of the object
+	 * 
+	 * @param name
+	 *            The name of the object
 	 * @return Null if no object was found, an object if one was found.
 	 */
 	public T get(String name) {
 		return get(name, true);
 	}
-	
+
 	public void submit(T t) {
 		elems.add(t);
 	}
-	
+
 	public boolean kick(T t) {
 		return elems.remove(t);
+	}
+
+	/**
+	 * Displays all the elements in the registry, like the following:<br>
+	 * <tt>[something, b, element, 43]</tt>
+	 */
+	public String toString() {
+		StringBuilder result = new StringBuilder('[');
+		int i = 0;
+		for (T t : this.elems) {
+			if (i == 0) {
+				result.append(t.getName());
+			} else {
+				result.append(", ");
+				result.append(t.getName());
+			}
+			i++;
+		}
+		result.append(']');
+		return new String(result);
 	}
 
 	public Iterator<T> iterator() {

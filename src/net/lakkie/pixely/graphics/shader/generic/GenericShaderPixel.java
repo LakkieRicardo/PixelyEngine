@@ -22,9 +22,7 @@ public class GenericShaderPixel extends GenericShaderComponentBase implements IS
 
 	public void accept(Sprite sprite, int x, int y, int vx, int vy) {
 		int color = sprite.pixels[x + y * sprite.width];
-
 		color = getColor(color, vx, vy);
-
 		this.pixels[vx + vy * Application.renderEngine.viewport.w] = color;
 	}
 	

@@ -57,5 +57,17 @@ public class RenderEngineShaded extends RenderEngine {
 	public ShaderProgram getShader() {
 		return this.shader;
 	}
+	
+	public int[] processSprite(int wx, int wy, Sprite sprite) {
+		int[] pixels = new int[sprite.pixels.length];
+		System.arraycopy(sprite.pixels, 0, pixels, 0, pixels.length);
+		this.shader.getPixel().assignCanvas(pixels);
+		for (int y = 0; y < sprite.height; y++) {
+			for (int x = 0; x < sprite.width; x++) {
+				this.shader.getPixel().accept(sprite, wx, wy, x, y);
+			}
+		}
+		return pixels;
+	}
 
 }

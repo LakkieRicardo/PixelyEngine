@@ -21,12 +21,12 @@ import net.lakkie.pixely.level.Tile;
  */
 public class ShaderProgram {
 
-	private IShaderComponentEntityRender entityRender;
-	private IShaderComponentPixel pixel;
-	private IShaderComponentSpriteRender spriteRender;
-	private IShaderComponentTileRender tileRender;
-	private List<IShaderComponentBase> otherComponents = new ArrayList<IShaderComponentBase>();
-	private boolean instantiated = false;
+	protected IShaderComponentEntityRender entityRender;
+	protected IShaderComponentPixel pixel;
+	protected IShaderComponentSpriteRender spriteRender;
+	protected IShaderComponentTileRender tileRender;
+	protected List<IShaderComponentBase> otherComponents = new ArrayList<IShaderComponentBase>();
+	protected boolean instantiated = false;
 
 	public void startSpriteRender(int wx, int wy, Sprite sprite, int[] pixels) {
 		spriteRender.assignCanvas(pixels);

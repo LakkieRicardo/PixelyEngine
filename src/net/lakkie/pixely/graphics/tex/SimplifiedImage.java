@@ -1,5 +1,7 @@
 package net.lakkie.pixely.graphics.tex;
 
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
@@ -12,27 +14,37 @@ public class SimplifiedImage {
 
 	public int width, height;
 	public final int[] pixels;
+	public final BufferedImage src;
 
 	public SimplifiedImage(int w, int h, int[] pixels) {
 		this.width = w;
 		this.height = h;
 		this.pixels = pixels;
+		this.src = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		int[] srcp = ((DataBufferInt)this.src.getRaster().getDataBuffer()).getData();
+		for (int i = 0; i < srcp.length; i++)
+			srcp[i] = this.pixels[i];
 	}
 
 	public SimplifiedImage(String loadPath, TextureLoadMode mode) {
-		this.pixels = null;
 		switch (mode) {
 		case INTO_BUFFER_READ_BUFFER:
+			this.src = DirectTextureLoader.readImage(loadPath);
 			IntBufferExtractor tex = BufferedTextureLoader.asExtractor(BufferedTextureLoader.loadTexture(loadPath));
 			this.width = tex.readAndMoveInteger();
 			this.height = tex.readAndMoveInteger();
-			__forceChangePixels(tex.readAndMoveIntegerArray(tex.getRemainingIntegers()), this);
+			this.pixels = tex.readAndMoveIntegerArray(tex.getRemainingIntegers());
 			break;
 		case DIRECT_BUFFERED_IMAGE:
-			DirectImage dImg = DirectTextureLoader.asDirectImage(DirectTextureLoader.readImage(loadPath));
+			this.src = DirectTextureLoader.readImage(loadPath);
+			DirectImage dImg = DirectTextureLoader.asDirectImage(this.src);
 			this.width = dImg.width();
 			this.height = dImg.height();
-			__forceChangePixels(dImg.pixels(), this);
+			this.pixels = dImg.pixels();
+			break;
+		default:
+			this.src = null;
+			this.pixels = null;
 		}
 	}
 
@@ -65,7 +77,7 @@ public class SimplifiedImage {
 	}
 
 	/**
-	 * Uses java reflection to change pixels on a {@link SimplifiedImage}. Use
+	 * Uses Java reflection to change pixels on a {@link SimplifiedImage}. Use
 	 * sparingly.
 	 */
 	public static void __forceChangePixels(int[] pixels, SimplifiedImage obj) {
