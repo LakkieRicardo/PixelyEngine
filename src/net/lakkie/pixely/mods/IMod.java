@@ -12,4 +12,6 @@ public interface IMod extends Nameable {
 		return this.getName();
 	}
 	
+	String getDisplayName();
+	
 }

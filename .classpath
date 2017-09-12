@@ -5,7 +5,7 @@
 	<classpathentry kind="src" path="res"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="libs/SimpleSerialization.jar"/>
-	<classpathentry kind="lib" path="libs/NashornLib-1.9.4-1.8.77-1.2.2.6.jar"/>
+	<classpathentry kind="lib" path="libs/NashornLib-1.9.4-1.8.77-1.2.2.6.jar" sourcepath="libs/extensions/NashornLib-1.9.4-1.8.77-1.2.2.6-src.zip"/>
 	<classpathentry kind="lib" path="libs/commons-io-2.5.jar" sourcepath="libs/extensions/commons-io-2.5-src.zip">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/PixelyEngine/libs/javadocs/commons-io-2.5-javadoc.jar!/"/>

@@ -8,6 +8,7 @@ import java.awt.image.BufferStrategy;
 import java.io.OutputStream;
 import java.lang.management.ManagementFactory;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -268,8 +269,19 @@ public final class Application {
 		}
 	}
 
-	public static void loadMods() {
+	public static void loadModLibs() {
 		JSLoader.evalScript("");
+	}
+
+	public static void loadMod(String path) {
+		StringBuilder test = new StringBuilder();
+		Scanner scanner = new Scanner(Application.class.getResourceAsStream(path));
+		while (scanner.hasNextLine()) {
+			test.append(scanner.nextLine());
+			test.append('\n');
+		}
+		scanner.close();
+		JSLoader.evalScript(new String(test));
 	}
 
 }

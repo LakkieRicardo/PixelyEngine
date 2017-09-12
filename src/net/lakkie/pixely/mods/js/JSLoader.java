@@ -16,11 +16,9 @@ import net.lakkie.pixely.utils.ExtensionFilenameFilter;
 
 public class JSLoader {
 
-	private static final String libs;
-	private static final NashornScriptEngineFactory factory;
-	private static final NashornScriptEngine engine;
+	static final String libs;
 	static final ScriptContext ctx;
-	
+
 	private JSLoader() {
 	}
 
@@ -43,12 +41,14 @@ public class JSLoader {
 		str.append("\r\n");
 		return new String(str);
 	}
-	
+
 	private static Object evalScript0(String script) throws ScriptException {
+		NashornScriptEngine engine = (NashornScriptEngine) new NashornScriptEngineFactory().getScriptEngine();
+		engine.setContext(JSContextRetriever.makeContext());
 		CompiledScript prgm = engine.compile(script);
 		return prgm.eval(ctx);
 	}
-	
+
 	public static Object evalScript(String str) {
 		StringBuilder src = new StringBuilder();
 		src.append(libs);
@@ -60,7 +60,7 @@ public class JSLoader {
 			return null;
 		}
 	}
-	
+
 	public static Object eval(File file) {
 		try {
 			return evalScript(FileUtils.readFileToString(file, (String) null));
@@ -69,11 +69,9 @@ public class JSLoader {
 			return null;
 		}
 	}
-	
+
 	static {
 		libs = getLibs();
-		factory = new NashornScriptEngineFactory();
-		engine = (NashornScriptEngine) factory.getScriptEngine();
 		ctx = JSContextRetriever.makeContext();
 	}
 

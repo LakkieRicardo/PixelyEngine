@@ -64,13 +64,6 @@ public class Vector2f {
 		return result;
 	}
 
-	/**
-	 * An alias for {@link Vector2f#modulus(Vector2f)}
-	 */
-	public Vector2f remainder(Vector2f other) {
-		return modulus(other);
-	}
-
 	public boolean equals(Object obj) {
 		if (!(obj instanceof Vector2f)) {
 			return obj == this;

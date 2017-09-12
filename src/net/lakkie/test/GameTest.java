@@ -41,7 +41,7 @@ public class GameTest {
 		EntityPlayer player = new EntityPlayer(level, spriteRed, new Vector2i(50, 50), "player");
 		player.add(new AttachmentController(3, MovementInputLayout.WASD));
 		EntityBody body = new EntityBody(level, new Vector2i(150, 25), "body");
-
+		
 		// Load tiles
 		for (int i = 0; i < 1000; i++) {
 			new Tile(level, spriteGreen, rand.nextInt(2000) - 1000, rand.nextInt(2000) - 1000, "test-" + i);
@@ -60,7 +60,8 @@ public class GameTest {
 		// Get the current render engine
 		RenderEngine engine = (RenderEngine) context.get(PixelyContext.renderEngine);
 		
-		Application.loadMods();
+		Application.loadModLibs();
+		Application.loadMod("/mods/test.js");
 		
 		Application.setUpdate((ctx) -> {
 			/*
