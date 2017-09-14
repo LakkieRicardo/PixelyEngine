@@ -4,37 +4,46 @@ import java.awt.Color;
 
 import net.lakkie.pixely.math.Mathif;
 
-public class ColorChannels {
+public class ColorChannels
+{
 
-	private ColorChannels() {
+	private ColorChannels()
+	{
 	}
 
-	public static int getA(int argb) {
+	public static int getA(int argb)
+	{
 		return (argb & 0xff000000) >> 24;
 	}
 
-	public static int getR(int argb) {
+	public static int getR(int argb)
+	{
 		return (argb & 0x00ff0000) >> 16;
 	}
 
-	public static int getG(int argb) {
+	public static int getG(int argb)
+	{
 		return (argb & 0x0000ff00) >> 8;
 	}
 
-	public static int getB(int argb) {
+	public static int getB(int argb)
+	{
 		return (argb & 0x000000ff);
 	}
 
-	public static int assembleARGB(int a, int r, int g, int b) {
+	public static int assembleARGB(int a, int r, int g, int b)
+	{
 		return (a << 24) | (r << 16) | (g << 8) | (b);
 	}
 
-	public static int multiplyColor(int argb, float multiplier, boolean multiplyAlpha) {
+	public static int multiplyColor(int argb, float multiplier, boolean multiplyAlpha)
+	{
 		float a = getA(argb);
 		float r = getR(argb);
 		float g = getG(argb);
 		float b = getB(argb);
-		if (multiplyAlpha) {
+		if (multiplyAlpha)
+		{
 			a *= multiplier;
 		}
 		r *= multiplier;
@@ -57,7 +66,8 @@ public class ColorChannels {
 	 *            The brightness value from 0 to 1
 	 * @return The ARGB color result with adjusted brightness
 	 */
-	public static int brightnessAdd(int argb, float brightness) {
+	public static int brightnessAdd(int argb, float brightness)
+	{
 		int a = getA(argb);
 		float[] hsb = new float[3];
 		Color.RGBtoHSB(getR(argb), getG(argb), getB(argb), hsb);
@@ -66,7 +76,8 @@ public class ColorChannels {
 		return result & ((a << 24) | 0x00ffffff);
 	}
 
-	public static int multiplyColor(int argb, int amount) {
+	public static int multiplyColor(int argb, int amount)
+	{
 		int r = getR(argb);
 		int g = getG(argb);
 		int b = getB(argb);
@@ -78,8 +89,9 @@ public class ColorChannels {
 		b = Mathif.clamp(b, 0, 255);
 		return assembleARGB(getA(argb), r, g, b);
 	}
-	
-	public static int addColor(int argb, int amount) {
+
+	public static int addColor(int argb, int amount)
+	{
 		int r = getR(argb);
 		int g = getG(argb);
 		int b = getB(argb);

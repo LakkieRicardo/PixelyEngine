@@ -10,9 +10,11 @@ import java.awt.event.MouseEvent;
  * @author Diego
  *
  */
-public class Buttons {
+public class Buttons
+{
 
-	private Buttons() {
+	private Buttons()
+	{
 	}
 
 	public static final int VK_ENTER = '\n';
@@ -161,8 +163,7 @@ public class Buttons {
 	public static final int VK_ADD = 0x6B;
 
 	/**
-	 * This constant is obsolete, and is included only for backwards
-	 * compatibility.
+	 * This constant is obsolete, and is included only for backwards compatibility.
 	 * 
 	 * @see #VK_SEPARATOR
 	 */
@@ -618,8 +619,8 @@ public class Buttons {
 	public static final int VK_JAPANESE_HIRAGANA = 0x0104;
 
 	/**
-	 * Constant for the Japanese-Roman function key. This key switches to a
-	 * Japanese input method and selects its Roman-Direct input mode.
+	 * Constant for the Japanese-Roman function key. This key switches to a Japanese
+	 * input method and selects its Roman-Direct input mode.
 	 * 
 	 * @since 1.2
 	 */
@@ -627,8 +628,8 @@ public class Buttons {
 	public static final int VK_JAPANESE_ROMAN = 0x0105;
 
 	/**
-	 * Constant for the locking Kana function key. This key locks the keyboard
-	 * into a Kana layout.
+	 * Constant for the locking Kana function key. This key locks the keyboard into
+	 * a Kana layout.
 	 * 
 	 * @since 1.3
 	 */
@@ -686,8 +687,8 @@ public class Buttons {
 	public static final int VK_BEGIN = 0xFF58;
 
 	/**
-	 * This value is used to indicate that the keyCode is unknown. KEY_TYPED
-	 * events do not have a keyCode value; this value is used instead.
+	 * This value is used to indicate that the keyCode is unknown. KEY_TYPED events
+	 * do not have a keyCode value; this value is used instead.
 	 */
 	public static final int VK_UNDEFINED = 0x0;
 

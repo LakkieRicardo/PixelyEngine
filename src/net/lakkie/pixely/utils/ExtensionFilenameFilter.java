@@ -5,19 +5,23 @@ import java.io.FilenameFilter;
 
 import org.apache.commons.io.FilenameUtils;
 
-public class ExtensionFilenameFilter implements FilenameFilter {
+public class ExtensionFilenameFilter implements FilenameFilter
+{
 
 	private final String ext;
-	
-	public ExtensionFilenameFilter(String ext) {
+
+	public ExtensionFilenameFilter(String ext)
+	{
 		this.ext = ext;
 	}
-	
-	public boolean accept(File dir, String name) {
+
+	public boolean accept(File dir, String name)
+	{
 		return FilenameUtils.getExtension(name).equals(this.ext);
 	}
-	
-	public String getExtension() {
+
+	public String getExtension()
+	{
 		return this.ext;
 	}
 

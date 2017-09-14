@@ -14,27 +14,34 @@ import jdk.nashorn.api.scripting.NashornScriptEngine;
 import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
 import net.lakkie.pixely.utils.ExtensionFilenameFilter;
 
-public class JSLoader {
+public class JSLoader
+{
 
 	static final String libs;
 	static final ScriptContext ctx;
 
-	private JSLoader() {
+	private JSLoader()
+	{
 	}
 
-	private static File[] findLibraries() {
+	private static File[] findLibraries()
+	{
 		File folder = new File(Paths.get(".").toAbsolutePath().toString());
 		return folder.listFiles(new ExtensionFilenameFilter("js"));
 	}
 
-	public static String getLibs() {
+	public static String getLibs()
+	{
 		File[] libs = findLibraries();
 		StringBuilder str = new StringBuilder();
-		for (File file : libs) {
-			try {
+		for (File file : libs)
+		{
+			try
+			{
 				str.append(FileUtils.readFileToString(file, (String) null));
 				str.append("\r\n");
-			} catch (IOException e) {
+			} catch (IOException e)
+			{
 				e.printStackTrace();
 			}
 		}
@@ -42,35 +49,43 @@ public class JSLoader {
 		return new String(str);
 	}
 
-	private static Object evalScript0(String script) throws ScriptException {
+	private static Object evalScript0(String script) throws ScriptException
+	{
 		NashornScriptEngine engine = (NashornScriptEngine) new NashornScriptEngineFactory().getScriptEngine();
 		engine.setContext(JSContextRetriever.makeContext());
 		CompiledScript prgm = engine.compile(script);
 		return prgm.eval(ctx);
 	}
 
-	public static Object evalScript(String str) {
+	public static Object evalScript(String str)
+	{
 		StringBuilder src = new StringBuilder();
 		src.append(libs);
 		src.append(str);
-		try {
+		try
+		{
 			return evalScript0(new String(src));
-		} catch (ScriptException e) {
+		} catch (ScriptException e)
+		{
 			e.printStackTrace();
 			return null;
 		}
 	}
 
-	public static Object eval(File file) {
-		try {
+	public static Object eval(File file)
+	{
+		try
+		{
 			return evalScript(FileUtils.readFileToString(file, (String) null));
-		} catch (IOException e) {
+		} catch (IOException e)
+		{
 			e.printStackTrace();
 			return null;
 		}
 	}
 
-	static {
+	static
+	{
 		libs = getLibs();
 		ctx = JSContextRetriever.makeContext();
 	}

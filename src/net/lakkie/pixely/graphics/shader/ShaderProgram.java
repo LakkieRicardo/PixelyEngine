@@ -19,7 +19,8 @@ import net.lakkie.pixely.level.Tile;
  * @author Diego
  *
  */
-public class ShaderProgram {
+public class ShaderProgram
+{
 
 	protected IShaderComponentEntityRender entityRender;
 	protected IShaderComponentPixel pixel;
@@ -28,87 +29,103 @@ public class ShaderProgram {
 	protected List<IShaderComponentBase> otherComponents = new ArrayList<IShaderComponentBase>();
 	protected boolean instantiated = false;
 
-	public void startSpriteRender(int wx, int wy, Sprite sprite, int[] pixels) {
+	public void startSpriteRender(int wx, int wy, Sprite sprite, int[] pixels)
+	{
 		spriteRender.assignCanvas(pixels);
 		pixel.assignCanvas(pixels);
 		spriteRender.accept(sprite, wx, wy);
 	}
 
-	public void startTileRender(Tile tile, int[] pixels) {
+	public void startTileRender(Tile tile, int[] pixels)
+	{
 		tileRender.assignCanvas(pixels);
 		tileRender.accept(tile);
 	}
 
-	public void startEntityRender(Entity entity, int[] pixels) {
+	public void startEntityRender(Entity entity, int[] pixels)
+	{
 		entityRender.assignCanvas(pixels);
 		entityRender.accept(entity);
 	}
 
-	public IShaderComponentEntityRender getEntityRender() {
+	public IShaderComponentEntityRender getEntityRender()
+	{
 		return entityRender;
 	}
 
-	public IShaderComponentPixel getPixel() {
+	public IShaderComponentPixel getPixel()
+	{
 		return pixel;
 	}
 
-	public IShaderComponentSpriteRender getSpriteRender() {
+	public IShaderComponentSpriteRender getSpriteRender()
+	{
 		return spriteRender;
 	}
 
-	public IShaderComponentTileRender getTileRender() {
+	public IShaderComponentTileRender getTileRender()
+	{
 		return tileRender;
 	}
 
-	public void setEntityRender(IShaderComponentEntityRender entityRender) {
+	public void setEntityRender(IShaderComponentEntityRender entityRender)
+	{
 		this.entityRender = entityRender;
 		this.entityRender.receiveShader(this);
 	}
 
-	public void setPixel(IShaderComponentPixel pixel) {
+	public void setPixel(IShaderComponentPixel pixel)
+	{
 		this.pixel = pixel;
 		this.pixel.receiveShader(this);
 	}
 
-	public void setSpriteRender(IShaderComponentSpriteRender spriteRender) {
+	public void setSpriteRender(IShaderComponentSpriteRender spriteRender)
+	{
 		this.spriteRender = spriteRender;
 		this.spriteRender.receiveShader(this);
 	}
 
-	public void setTileRender(IShaderComponentTileRender tileRender) {
+	public void setTileRender(IShaderComponentTileRender tileRender)
+	{
 		this.tileRender = tileRender;
 		this.tileRender.receiveShader(this);
 	}
 
-	public boolean addComponent(IShaderComponentBase comp) {
+	public boolean addComponent(IShaderComponentBase comp)
+	{
 		return this.otherComponents.add(comp);
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> T getComponentImplementation(Class<T> type) {
-		for (IShaderComponentBase comp : this.otherComponents) {
-			if (comp.getClass() == type) {
-				return (T) comp;
-			}
+	public <T> T getComponentImplementation(Class<T> type)
+	{
+		for (IShaderComponentBase comp : this.otherComponents)
+		{
+			if (comp.getClass() == type) { return (T) comp; }
 		}
 		return null;
 	}
 
-	public void init() {
+	public void init()
+	{
 		this.entityRender.init();
 		this.pixel.init();
 		this.spriteRender.init();
 		this.tileRender.init();
 
-		if (this.otherComponents.size() > 0) {
-			for (IShaderComponentBase comp : this.otherComponents) {
+		if (this.otherComponents.size() > 0)
+		{
+			for (IShaderComponentBase comp : this.otherComponents)
+			{
 				comp.init();
 			}
 		}
 		this.instantiated = true;
 	}
-	
-	public boolean isInited() {
+
+	public boolean isInited()
+	{
 		return instantiated;
 	}
 

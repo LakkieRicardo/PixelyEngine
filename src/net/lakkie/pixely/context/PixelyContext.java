@@ -6,8 +6,9 @@ import java.util.Map;
 
 import net.lakkie.pixely.graphics.RenderEngine;
 
-public class PixelyContext {
-	
+public class PixelyContext
+{
+
 	public static final String canvas = "canvas";
 	public static final String ups = "updates_per_second";
 	public static final String width = "width";
@@ -15,23 +16,27 @@ public class PixelyContext {
 	public static final String debug = "debug";
 	public static final String renderEngine = "render_engine";
 	public static final String graphics = "graphics";
-	
+
 	Map<String, Object> fields;
-	
-	public PixelyContext(ContextProvider provider) {
+
+	public PixelyContext(IContextProvider provider)
+	{
 		this.fields = new HashMap<String, Object>();
 		provider.setup(this);
 	}
-	
-	public Object get(String name) {
+
+	public Object get(String name)
+	{
 		return fields.get(name);
 	}
-	
-	public void set(String name, Object value) {
+
+	public void set(String name, Object value)
+	{
 		fields.put(name, value);
 	}
-	
-	public void put(Canvas canvas, double ups, int width, int height, boolean debug, RenderEngine engine) {
+
+	public void put(Canvas canvas, double ups, int width, int height, boolean debug, RenderEngine engine)
+	{
 		fields.put(PixelyContext.canvas, canvas);
 		fields.put(PixelyContext.ups, ups);
 		fields.put(PixelyContext.width, width);
@@ -39,32 +44,38 @@ public class PixelyContext {
 		fields.put(PixelyContext.debug, debug);
 		fields.put(PixelyContext.renderEngine, engine);
 	}
-	
-	public double getUPS() {
+
+	public double getUPS()
+	{
 		return (double) fields.get(PixelyContext.ups);
 	}
-	
-	public Canvas getCanvas() {
+
+	public Canvas getCanvas()
+	{
 		return (Canvas) fields.get(PixelyContext.canvas);
 	}
-	
-	public int getWidth() {
+
+	public int getWidth()
+	{
 		return (int) fields.get(PixelyContext.width);
 	}
-	
-	public int getHeight() {
+
+	public int getHeight()
+	{
 		return (int) fields.get(PixelyContext.height);
 	}
-	
-	public boolean isDebugActive() {
+
+	public boolean isDebugActive()
+	{
 		return (boolean) fields.get(PixelyContext.debug);
 	}
-	
+
 	/**
 	 * @return A copy of all of the fields.
 	 */
-	public Map<String, Object> getFields() {
+	public Map<String, Object> getFields()
+	{
 		return new HashMap<>(this.fields);
 	}
-	
+
 }

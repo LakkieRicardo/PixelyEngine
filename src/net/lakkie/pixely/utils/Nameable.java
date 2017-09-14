@@ -1,7 +1,8 @@
 package net.lakkie.pixely.utils;
 
-public interface Nameable {
+public interface Nameable
+{
 
 	String getName();
-	
+
 }

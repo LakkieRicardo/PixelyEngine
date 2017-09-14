@@ -9,6 +9,7 @@ import net.lakkie.pixely.logging.LogUtils;
  * @author Diego
  *
  */
-public class F extends LogUtils {
+public class F extends LogUtils
+{
 
 }

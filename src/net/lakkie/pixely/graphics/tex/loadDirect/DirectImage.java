@@ -2,23 +2,28 @@ package net.lakkie.pixely.graphics.tex.loadDirect;
 
 import java.awt.image.BufferedImage;
 
-public class DirectImage {
+public class DirectImage
+{
 
 	private BufferedImage image;
 
-	public DirectImage(BufferedImage image) {
+	public DirectImage(BufferedImage image)
+	{
 		this.image = image;
 	}
 
-	public int width() {
+	public int width()
+	{
 		return this.image.getWidth();
 	}
 
-	public int height() {
+	public int height()
+	{
 		return this.image.getHeight();
 	}
 
-	public int[] pixels() {
+	public int[] pixels()
+	{
 		return this.image.getRGB(0, 0, width(), height(), new int[width() * height()], 0, width());
 	}
 

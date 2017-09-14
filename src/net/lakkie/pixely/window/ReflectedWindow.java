@@ -13,7 +13,8 @@ import net.lakkie.pixely.wrappers.FrameBuilder;
  * @author Diego
  *
  */
-public class ReflectedWindow<T> extends Window<T> {
+public class ReflectedWindow<T> extends Window<T>
+{
 
 	private Object frame;
 	private Class<T> type;
@@ -29,62 +30,80 @@ public class ReflectedWindow<T> extends Window<T> {
 	 *            The width of the frame
 	 * @param height
 	 *            The height of the frame
-	 * @param type The type of the implementation of the frame
+	 * @param type
+	 *            The type of the implementation of the frame
 	 */
-	public ReflectedWindow(PixelyContext toAdd, String title, int width, int height, Class<T> type) {
+	public ReflectedWindow(PixelyContext toAdd, String title, int width, int height, Class<T> type)
+	{
 		super(toAdd, title, width, height, type);
-		
-		
-		try {
+
+		try
+		{
 			this.frame = FrameBuilder.instantiateUnsafe(title, width, height, type);
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 
 	}
 
-	public Object getFrame() {
+	public Object getFrame()
+	{
 		return frame;
 	}
 
-	public Class<T> getFrameType() {
+	public Class<T> getFrameType()
+	{
 		return type;
 	}
 
-	protected void setTitle(String title) {
-		try {
+	protected void setTitle(String title)
+	{
+		try
+		{
 			FrameBuilder.doTitle(frame, title, frame.getClass());
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			System.err.printf("Error while setting frame title to \"%s\"\n", title);
 			e.printStackTrace();
 		}
 	}
 
-	protected void setSize(int width, int height) {
-		try {
+	protected void setSize(int width, int height)
+	{
+		try
+		{
 			FrameBuilder.doSize(frame, width, height, frame.getClass());
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
 
-	public void appendContext() {
-		try {
+	public void appendContext()
+	{
+		try
+		{
 			FrameBuilder.appendGame(frame, getContext());
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 		flagContextAppended();
 	}
 
-	protected void setVisible(boolean visible) {
-		try {
-			if (visible) {
+	protected void setVisible(boolean visible)
+	{
+		try
+		{
+			if (visible)
+			{
 				// Try to center
 				FrameBuilder.tryCenter(frame);
 			}
 			FrameBuilder.doVisible(frame, getContext());
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}

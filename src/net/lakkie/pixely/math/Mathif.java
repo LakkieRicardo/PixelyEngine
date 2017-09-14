@@ -18,37 +18,34 @@ package net.lakkie.pixely.math;
  * @author Diego
  *
  */
-public class Mathif {
+public class Mathif
+{
 
 	/**
 	 * The minimum difference 2 floats can be before they are no longer equal
 	 */
 	public static final float MIN_FLOAT_IMPRECISION = 1.0e-6f;
 
-	private Mathif() {
+	private Mathif()
+	{
 	}
 
-	public static int clamp(int value, int min, int max) {
-		if (value <= min) {
-			return min;
-		}
-		if (value >= max) {
-			return max;
-		}
+	public static int clamp(int value, int min, int max)
+	{
+		if (value <= min) { return min; }
+		if (value >= max) { return max; }
 		return value;
 	}
 
-	public static float clamp(float value, float min, float max) {
-		if (value <= min) {
-			return min;
-		}
-		if (value >= max) {
-			return max;
-		}
+	public static float clamp(float value, float min, float max)
+	{
+		if (value <= min) { return min; }
+		if (value >= max) { return max; }
 		return value;
 	}
 
-	public static Vector2f vecConvertToFloat(Vector2i orig) {
+	public static Vector2f vecConvertToFloat(Vector2i orig)
+	{
 		return new Vector2f(orig.x, orig.y);
 	}
 
@@ -59,7 +56,8 @@ public class Mathif {
 	 *            The vector to be floored.
 	 * @return A new floored vector.
 	 */
-	public static Vector2i vecFloor(Vector2f vec) {
+	public static Vector2i vecFloor(Vector2f vec)
+	{
 		return new Vector2i((int) Math.floor(vec.x), (int) Math.floor(vec.y));
 	}
 
@@ -70,15 +68,18 @@ public class Mathif {
 	 *            The vector to be ceiled.
 	 * @return A new ceiled vector.
 	 */
-	public static Vector2i vecCeil(Vector2f vec) {
+	public static Vector2i vecCeil(Vector2f vec)
+	{
 		return new Vector2i((int) Math.ceil(vec.x), (int) Math.ceil(vec.y));
 	}
 
-	public static Vector2f vecAbs(Vector2f a) {
+	public static Vector2f vecAbs(Vector2f a)
+	{
 		return new Vector2f(Math.abs(a.x), Math.abs(a.y));
 	}
 
-	public static Vector2i vecAbs(Vector2i a) {
+	public static Vector2i vecAbs(Vector2i a)
+	{
 		return new Vector2i(Math.abs(a.x), Math.abs(a.y));
 	}
 
@@ -91,30 +92,36 @@ public class Mathif {
 	 *            The scalar value
 	 * @return The scalar vector
 	 */
-	public static Vector2f vecScalar(Vector2f a, float value) {
+	public static Vector2f vecScalar(Vector2f a, float value)
+	{
 		return a.multiply(new Vector2f(value));
 	}
 
-	public static Vector2i vecScalar(Vector2i a, int value) {
+	public static Vector2i vecScalar(Vector2i a, int value)
+	{
 		return a.multiply(new Vector2i(value));
 	}
 
-	public static float vecLength(Vector2f a) {
+	public static float vecLength(Vector2f a)
+	{
 		return a.x + a.y;
 	}
 
-	public static int vecLength(Vector2i a) {
+	public static int vecLength(Vector2i a)
+	{
 		return a.x + a.y;
 	}
 
-	public static Vector2f vecNormalize(Vector2f a) {
+	public static Vector2f vecNormalize(Vector2f a)
+	{
 		float len = vecLength(a);
 		float nx = a.x / len;
 		float ny = a.y / len;
 		return new Vector2f(nx, ny);
 	}
 
-	public static Vector2i vecNormalize(Vector2i a) {
+	public static Vector2i vecNormalize(Vector2i a)
+	{
 		int len = vecLength(a);
 		int nx = a.x / len;
 		int ny = a.y / len;
@@ -131,7 +138,8 @@ public class Mathif {
 	 * @return If these 2 floats' differences were less than
 	 *         {@link VectorMath#MIN_FLOAT_IMPRECISION}
 	 */
-	public static boolean flcmp(float a, float b) {
+	public static boolean flcmp(float a, float b)
+	{
 		return Math.abs(a - b) < MIN_FLOAT_IMPRECISION;
 	}
 
@@ -142,12 +150,12 @@ public class Mathif {
 	 *            The input float
 	 * @return The rounded float
 	 */
-	public static float halfRound(float a) {
+	public static float halfRound(float a)
+	{
 		float decimal = (float) (a - Math.floor(a));
 		if (decimal < 0.5f)
 			return (float) Math.floor(a);
-		else
-			return (float) Math.ceil(a);
+		else return (float) Math.ceil(a);
 	}
 
 	/**
@@ -155,7 +163,8 @@ public class Mathif {
 	 * 
 	 * @see {@link Mathif#halfRound(float)}
 	 */
-	public static int halfRoundInt(float a) {
+	public static int halfRoundInt(float a)
+	{
 		return (int) halfRound(a);
 	}
 

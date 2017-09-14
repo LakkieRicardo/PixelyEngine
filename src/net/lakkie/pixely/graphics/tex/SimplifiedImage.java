@@ -10,24 +10,28 @@ import net.lakkie.pixely.graphics.tex.loadBuffered.IntBufferExtractor;
 import net.lakkie.pixely.graphics.tex.loadDirect.DirectImage;
 import net.lakkie.pixely.graphics.tex.loadDirect.DirectTextureLoader;
 
-public class SimplifiedImage {
+public class SimplifiedImage
+{
 
 	public int width, height;
 	public final int[] pixels;
 	public final BufferedImage src;
 
-	public SimplifiedImage(int w, int h, int[] pixels) {
+	public SimplifiedImage(int w, int h, int[] pixels)
+	{
 		this.width = w;
 		this.height = h;
 		this.pixels = pixels;
 		this.src = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-		int[] srcp = ((DataBufferInt)this.src.getRaster().getDataBuffer()).getData();
+		int[] srcp = ((DataBufferInt) this.src.getRaster().getDataBuffer()).getData();
 		for (int i = 0; i < srcp.length; i++)
 			srcp[i] = this.pixels[i];
 	}
 
-	public SimplifiedImage(String loadPath, TextureLoadMode mode) {
-		switch (mode) {
+	public SimplifiedImage(String loadPath, TextureLoadMode mode)
+	{
+		switch (mode)
+		{
 		case INTO_BUFFER_READ_BUFFER:
 			this.src = DirectTextureLoader.readImage(loadPath);
 			IntBufferExtractor tex = BufferedTextureLoader.asExtractor(BufferedTextureLoader.loadTexture(loadPath));
@@ -48,31 +52,38 @@ public class SimplifiedImage {
 		}
 	}
 
-	public SimplifiedImage(String loadPath) {
+	public SimplifiedImage(String loadPath)
+	{
 		this(loadPath, TextureLoadMode.DIRECT_BUFFERED_IMAGE);
 	}
 
-	public void set(int x, int y, int color) {
+	public void set(int x, int y, int color)
+	{
 		this.pixels[x + y * width] = color;
 	}
 
-	public int getHeight() {
+	public int getHeight()
+	{
 		return height;
 	}
 
-	public int[] getPixels() {
+	public int[] getPixels()
+	{
 		return pixels;
 	}
 
-	public int getWidth() {
+	public int getWidth()
+	{
 		return width;
 	}
 
-	public void setHeight(int height) {
+	public void setHeight(int height)
+	{
 		this.height = height;
 	}
 
-	public void setWidth(int width) {
+	public void setWidth(int width)
+	{
 		this.width = width;
 	}
 
@@ -80,12 +91,15 @@ public class SimplifiedImage {
 	 * Uses Java reflection to change pixels on a {@link SimplifiedImage}. Use
 	 * sparingly.
 	 */
-	public static void __forceChangePixels(int[] pixels, SimplifiedImage obj) {
-		try {
+	public static void __forceChangePixels(int[] pixels, SimplifiedImage obj)
+	{
+		try
+		{
 			__modifiersField.setInt(__pixelField, Modifier.PUBLIC);
 			__pixelField.set(obj, pixels);
 			__modifiersField.setInt(__pixelField, Modifier.PUBLIC | Modifier.FINAL);
-		} catch (IllegalArgumentException | IllegalAccessException e) {
+		} catch (IllegalArgumentException | IllegalAccessException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -93,13 +107,16 @@ public class SimplifiedImage {
 	private static final Field __pixelField;
 	private static final Field __modifiersField;
 
-	static {
+	static
+	{
 		Field _modifiersField = null;
 		Field _pixelField = null;
-		try {
+		try
+		{
 			_modifiersField = Field.class.getDeclaredField("modifiers");
 			_pixelField = SimplifiedImage.class.getDeclaredField("pixels");
-		} catch (NoSuchFieldException | SecurityException e) {
+		} catch (NoSuchFieldException | SecurityException e)
+		{
 			e.printStackTrace();
 		}
 		__pixelField = _pixelField;

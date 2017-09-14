@@ -19,51 +19,63 @@ import net.lakkie.pixely.math.Vector4;
  * @author Diego
  *
  */
-public class RenderEngineShaded extends RenderEngine {
+public class RenderEngineShaded extends RenderEngine
+{
 
 	public static final String name = "shaded";
 
 	private ShaderProgram shader;
 	public Vector2i lightSource = new Vector2i(400, 200);
-	
-	public RenderEngineShaded(Vector4 viewport, ShaderProgram assembledShader) {
+
+	public RenderEngineShaded(Vector4 viewport, ShaderProgram assembledShader)
+	{
 		super(viewport, name);
 		this.shader = assembledShader;
 	}
 
-	public RenderEngineShaded(Vector4 viewport) {
+	public RenderEngineShaded(Vector4 viewport)
+	{
 		this(viewport, null);
 		this.shader = new ShaderProgram();
 	}
-	
-	public void firstStart() {
-		if (!this.shader.isInited()) {
+
+	public void firstStart()
+	{
+		if (!this.shader.isInited())
+		{
 			GenericShader.instantiate(this.shader);
 		}
 	}
 
-	public void renderSprite(int worldX, int worldY, Sprite sprite) {
+	public void renderSprite(int worldX, int worldY, Sprite sprite)
+	{
 		this.shader.startSpriteRender(worldX, worldY, sprite, this.pixels);
 	}
 
-	public void renderTile(Tile tile) {
+	public void renderTile(Tile tile)
+	{
 		this.shader.startTileRender(tile, this.pixels);
 	}
 
-	public void renderEntity(Entity entity) {
+	public void renderEntity(Entity entity)
+	{
 		this.shader.startEntityRender(entity, this.pixels);
 	}
 
-	public ShaderProgram getShader() {
+	public ShaderProgram getShader()
+	{
 		return this.shader;
 	}
-	
-	public int[] processSprite(int wx, int wy, Sprite sprite) {
+
+	public int[] processSprite(int wx, int wy, Sprite sprite)
+	{
 		int[] pixels = new int[sprite.pixels.length];
 		System.arraycopy(sprite.pixels, 0, pixels, 0, pixels.length);
 		this.shader.getPixel().assignCanvas(pixels);
-		for (int y = 0; y < sprite.height; y++) {
-			for (int x = 0; x < sprite.width; x++) {
+		for (int y = 0; y < sprite.height; y++)
+		{
+			for (int x = 0; x < sprite.width; x++)
+			{
 				this.shader.getPixel().accept(sprite, wx, wy, x, y);
 			}
 		}

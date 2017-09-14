@@ -1,7 +1,8 @@
 package net.lakkie.pixely.context;
 
-public interface ContextProvider {
-	
+public interface IContextProvider
+{
+
 	void setup(PixelyContext context);
-	
+
 }

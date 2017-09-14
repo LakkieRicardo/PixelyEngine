@@ -4,20 +4,25 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class Registry<T extends Nameable> implements Iterable<T> {
+public class Registry<T extends Nameable> implements Iterable<T>
+{
 
 	private Set<T> elems;
 
-	public Registry(T[] startingElements) {
+	public Registry(T[] startingElements)
+	{
 		elems = new HashSet<T>();
-		if (startingElements != null) {
-			for (T t : startingElements) {
+		if (startingElements != null)
+		{
+			for (T t : startingElements)
+			{
 				elems.add(t);
 			}
 		}
 	}
 
-	public Registry() {
+	public Registry()
+	{
 		this(null);
 	}
 
@@ -26,7 +31,8 @@ public class Registry<T extends Nameable> implements Iterable<T> {
 	 * 
 	 * @return A copy of the elements in the registry.
 	 */
-	public Set<T> getElements() {
+	public Set<T> getElements()
+	{
 		return new HashSet<T>(elems);
 	}
 
@@ -37,15 +43,20 @@ public class Registry<T extends Nameable> implements Iterable<T> {
 	 *            The name of the object
 	 * @return Null if no object was found, an object if one was found.
 	 */
-	public T get(String name, boolean ignoreCase) {
+	public T get(String name, boolean ignoreCase)
+	{
 		Iterator<T> it = elems.iterator();
-		while (it.hasNext()) {
+		while (it.hasNext())
+		{
 			T next = it.next();
-			if (ignoreCase && next.getName().equalsIgnoreCase(name)) {
+			if (ignoreCase && next.getName().equalsIgnoreCase(name))
+			{
 				return next;
-			} else if (!ignoreCase && next.getName().equals(name)) {
+			} else if (!ignoreCase && next.getName().equals(name))
+			{
 				return next;
-			} else {
+			} else
+			{
 				continue;
 			}
 		}
@@ -59,15 +70,18 @@ public class Registry<T extends Nameable> implements Iterable<T> {
 	 *            The name of the object
 	 * @return Null if no object was found, an object if one was found.
 	 */
-	public T get(String name) {
+	public T get(String name)
+	{
 		return get(name, true);
 	}
 
-	public void submit(T t) {
+	public void submit(T t)
+	{
 		elems.add(t);
 	}
 
-	public boolean kick(T t) {
+	public boolean kick(T t)
+	{
 		return elems.remove(t);
 	}
 
@@ -75,13 +89,17 @@ public class Registry<T extends Nameable> implements Iterable<T> {
 	 * Displays all the elements in the registry, like the following:<br>
 	 * <tt>[something, b, element, 43]</tt>
 	 */
-	public String toString() {
+	public String toString()
+	{
 		StringBuilder result = new StringBuilder('[');
 		int i = 0;
-		for (T t : this.elems) {
-			if (i == 0) {
+		for (T t : this.elems)
+		{
+			if (i == 0)
+			{
 				result.append(t.getName());
-			} else {
+			} else
+			{
 				result.append(", ");
 				result.append(t.getName());
 			}
@@ -91,7 +109,8 @@ public class Registry<T extends Nameable> implements Iterable<T> {
 		return new String(result);
 	}
 
-	public Iterator<T> iterator() {
+	public Iterator<T> iterator()
+	{
 		return getElements().iterator();
 	}
 

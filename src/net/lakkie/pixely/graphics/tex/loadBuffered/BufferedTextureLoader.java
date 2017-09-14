@@ -20,7 +20,8 @@ import javax.imageio.ImageIO;
  * @author Diego
  *
  */
-public class BufferedTextureLoader {
+public class BufferedTextureLoader
+{
 
 	/**
 	 * Puts an image into an integer buffer.
@@ -29,23 +30,26 @@ public class BufferedTextureLoader {
 	 *            The path to load the image from.
 	 * @return The integer data.
 	 */
-	public static IntBuffer loadTexture(String loadPath) {
-		try {
+	public static IntBuffer loadTexture(String loadPath)
+	{
+		try
+		{
 			BufferedImage img = ImageIO.read(BufferedTextureLoader.class.getResource(loadPath));
 			IntBuffer result = IntBuffer.allocate(img.getWidth() * img.getHeight() + 2);
 			result.put(img.getWidth());
 			result.put(img.getHeight());
-			result.put(img.getRGB(0, 0, img.getWidth(), img.getHeight(), new int[img.getWidth() * img.getHeight()], 0,
-					img.getWidth()));
+			result.put(img.getRGB(0, 0, img.getWidth(), img.getHeight(), new int[img.getWidth() * img.getHeight()], 0, img.getWidth()));
 			return result;
-		} catch (IOException e) {
+		} catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 
 		return null;
 	}
 
-	public static IntBufferExtractor asExtractor(IntBuffer img) {
+	public static IntBufferExtractor asExtractor(IntBuffer img)
+	{
 		return new IntBufferExtractor(img);
 	}
 

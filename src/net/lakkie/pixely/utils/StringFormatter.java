@@ -1,8 +1,10 @@
 package net.lakkie.pixely.utils;
 
-public class StringFormatter {
+public class StringFormatter
+{
 
-	private StringFormatter() {
+	private StringFormatter()
+	{
 	}
 
 	/**
@@ -28,7 +30,8 @@ public class StringFormatter {
 	 * @param str
 	 * @return
 	 */
-	public static String capitalize(String str) {
+	public static String capitalize(String str)
+	{
 		str = str.toLowerCase();
 		char[] text = str.toCharArray();
 		text[0] = Character.toUpperCase(text[0]);

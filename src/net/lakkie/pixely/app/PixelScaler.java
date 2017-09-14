@@ -14,34 +14,41 @@ import net.lakkie.pixely.math.Vector2i;
  * @author Diego
  *
  */
-public class PixelScaler {
+public class PixelScaler
+{
 
-	private PixelScaler() {
+	private PixelScaler()
+	{
 	}
 
 	/**
 	 * Alias for {@link PixelScaler#scaleX()}
 	 */
-	public static float sx() {
+	public static float sx()
+	{
 		return scaleX();
 	}
 
 	/**
 	 * Alias for {@link PixelScaler#scaleY()}
 	 */
-	public static float sy() {
+	public static float sy()
+	{
 		return scaleY();
 	}
 
-	public static float scaleX() {
+	public static float scaleX()
+	{
 		return (float) (targetWidth) / (float) (renderEngine.viewport.w);
 	}
 
-	public static float scaleY() {
+	public static float scaleY()
+	{
 		return (float) (targetHeight) / (float) (renderEngine.viewport.h);
 	}
 
-	public static Vector2i levelPointToScreenPoint(Vector2i point) {
+	public static Vector2i levelPointToScreenPoint(Vector2i point)
+	{
 		float lx = (float) point.x;
 		float ly = (float) point.y;
 		lx *= sy();

@@ -8,22 +8,26 @@ import javax.script.SimpleScriptContext;
 import net.lakkie.pixely.mods.NativeModHook;
 import net.lakkie.pixely.utils.F;
 
-public class JSContextRetriever {
+public class JSContextRetriever
+{
 
-	private JSContextRetriever() {
+	private JSContextRetriever()
+	{
 	}
-	
-	public static ScriptContext makeContext() {
+
+	public static ScriptContext makeContext()
+	{
 		SimpleScriptContext ctx = new SimpleScriptContext();
 		ctx.setBindings(makeBindings(), SimpleScriptContext.GLOBAL_SCOPE);
 		return ctx;
 	}
-	
-	public static Bindings makeBindings() {
+
+	public static Bindings makeBindings()
+	{
 		SimpleBindings bindings = new SimpleBindings();
 		bindings.put("ntv", NativeModHook.inst);
 		bindings.put("dlog", F.get());
 		return bindings;
 	}
-	
+
 }

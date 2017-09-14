@@ -11,7 +11,8 @@ import net.lakkie.pixely.context.PixelyContext;
  * @param <T>
  *            The type object of the window.
  */
-public abstract class Window<T> {
+public abstract class Window<T>
+{
 
 	protected PixelyContext context;
 
@@ -20,7 +21,8 @@ public abstract class Window<T> {
 	private Class<T> type;
 	private boolean appendedContext;
 
-	public Window(PixelyContext context, String title, int width, int height, Class<T> type) {
+	public Window(PixelyContext context, String title, int width, int height, Class<T> type)
+	{
 		assert context != null;
 		assert title != null;
 		assert !(width <= 0);
@@ -42,59 +44,72 @@ public abstract class Window<T> {
 
 	protected abstract void setVisible(boolean visible);
 
-	public void resize(int width, int height) {
+	public void resize(int width, int height)
+	{
 		this.width = width;
 		this.height = height;
 		setSize(width, height);
 	}
 
-	public void rename(String title) {
+	public void rename(String title)
+	{
 		this.title = title;
 		setTitle(title);
 	}
 
-	public void show() {
-		if (!isContextAppended()) {
+	public void show()
+	{
+		if (!isContextAppended())
+		{
 			appendContext();
 		}
 		getContext().set("frame_visible", true);
 		setVisible(true);
 	}
 
-	public void hide() {
+	public void hide()
+	{
 		getContext().set("frame_visible", false);
 		setVisible(false);
 	}
 
-	public boolean isVisible() {
+	public boolean isVisible()
+	{
 		return (boolean) getContext().get("frame_visible");
 	}
 
-	public PixelyContext getContext() {
+	public PixelyContext getContext()
+	{
 		return context;
 	}
 
-	public int getHeight() {
+	public int getHeight()
+	{
 		return height;
 	}
 
-	public String getTitle() {
+	public String getTitle()
+	{
 		return title;
 	}
 
-	public int getWidth() {
+	public int getWidth()
+	{
 		return width;
 	}
 
-	public Class<T> getType() {
+	public Class<T> getType()
+	{
 		return type;
 	}
-	
-	public boolean isContextAppended() {
+
+	public boolean isContextAppended()
+	{
 		return appendedContext;
 	}
-	
-	protected void flagContextAppended() {
+
+	protected void flagContextAppended()
+	{
 		appendedContext = true;
 	}
 

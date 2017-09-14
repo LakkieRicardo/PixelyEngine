@@ -14,39 +14,49 @@ import net.lakkie.pixely.wrappers.FrameBuilder;
  * @param <T>
  *            The implementation type
  */
-public class ImplementedWindow<T extends IAbstractWindow> extends Window<T> {
+public class ImplementedWindow<T extends IAbstractWindow> extends Window<T>
+{
 
 	private T frame;
 
-	public ImplementedWindow(PixelyContext context, String title, int width, int height, Class<T> type) {
+	public ImplementedWindow(PixelyContext context, String title, int width, int height, Class<T> type)
+	{
 		super(context, title, width, height, type);
-		try {
+		try
+		{
 			frame = FrameBuilder.instantiateSafe(title, width, height, type);
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
 
-	protected void setTitle(String title) {
+	protected void setTitle(String title)
+	{
 		getFrame().setTitle(title);
 	}
 
-	protected void setSize(int width, int height) {
+	protected void setSize(int width, int height)
+	{
 		getFrame().setSize(width, height);
 	}
 
-	public T getFrame() {
+	public T getFrame()
+	{
 		return frame;
 	}
 
-	public void appendContext() {
+	public void appendContext()
+	{
 		frame.addCanvas(getContext().getCanvas());
 		new InputRegistry(getContext().getCanvas());
 		flagContextAppended();
 	}
 
-	protected void setVisible(boolean visible) {
-		if (visible) {
+	protected void setVisible(boolean visible)
+	{
+		if (visible)
+		{
 			frame.center();
 		}
 		frame.setVisible(visible);
