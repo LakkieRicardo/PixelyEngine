@@ -2,7 +2,9 @@ package net.lakkie.pixely.mods.js;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.script.CompiledScript;
 import javax.script.ScriptContext;
@@ -12,7 +14,8 @@ import org.apache.commons.io.FileUtils;
 
 import jdk.nashorn.api.scripting.NashornScriptEngine;
 import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
-import net.lakkie.pixely.utils.ExtensionFilenameFilter;
+import net.lakkie.pixely.utils.CollectionUtils;
+import net.lakkie.pixely.utils.ReaderUtils;
 
 public class JSLoader
 {
@@ -24,26 +27,29 @@ public class JSLoader
 	{
 	}
 
-	private static File[] findLibraries()
+	private static List<InputStream> findLibraries()
 	{
-		File folder = new File(Paths.get(".").toAbsolutePath().toString());
-		return folder.listFiles(new ExtensionFilenameFilter("js"));
+		// Using a list because order matters
+		List<InputStream> result = new ArrayList<InputStream>();
+
+		// TODO: Read a file and look for all libraries
+		result.add(JSLoader.class.getResourceAsStream("/js/lib_0_bindings.js"));
+		result.add(JSLoader.class.getResourceAsStream("/js/lib_1_utils.js"));
+		result.add(JSLoader.class.getResourceAsStream("/js/lib_2_mods.js"));
+		
+		CollectionUtils.nullClear(result);
+		
+		return result;
 	}
 
 	public static String getLibs()
 	{
-		File[] libs = findLibraries();
+		List<InputStream> libs = findLibraries();
 		StringBuilder str = new StringBuilder();
-		for (File file : libs)
+		for (InputStream input : libs)
 		{
-			try
-			{
-				str.append(FileUtils.readFileToString(file, (String) null));
-				str.append("\r\n");
-			} catch (IOException e)
-			{
-				e.printStackTrace();
-			}
+			str.append(ReaderUtils.readInputStream(input));
+			str.append("\r\n");
 		}
 		str.append("\r\n");
 		return new String(str);

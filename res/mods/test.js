@@ -1,9 +1,5 @@
 function makeTestMod() {
-	var modBuilder = new ModBuilder();
-	// ModBuilder helps when reading over old code.
-	modBuilder = modBuilder.withRealName("test").withVersion("1.0").withAuthor(
-			"Lakkie").withDesc("Test Mod").withDisplayName("Test Mod");
-	var mod = modBuilder.build();
+	var mod = new Mod("tmod", "1.0", "Lakkie", "A test modification for testing purposes", "Test Mod");
 	return mod;
 }
 
