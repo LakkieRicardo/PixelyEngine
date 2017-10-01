@@ -12,6 +12,7 @@
 
  */
 
+// Used for debugging
 var ntv_UsedNative = false;
 
 function ntv_InitNativeCall() {
