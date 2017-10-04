@@ -6,7 +6,7 @@ This game engine is based off of Java's idea, which is build once, run anywhere.
 This is intended to be supported to run on any platform.
 Here we try to keep things as generic as possible. We take no shortcuts.
 
-*This project has recently been converted to maven, the group ID is net.lakkie, and the artifact ID is pixely-engine. To build a working version, set your maven build goals to "compile package"*
+_To build using Maven, [click here](https://github.com/LakkieGaming/PixelyEngine/wiki/Guide-to-Building)_
 
 ### I'm not an expert myself, so any support would be highly appreciated.
 
