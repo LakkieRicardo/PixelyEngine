@@ -23,8 +23,7 @@ public class LogUtils
 		runAction();
 		Logger logger = get();
 		if (logger == null)
-		{ // Scala is sensitive about null checks, it throws a NullPointer if no null
-			// check, or it could be something else
+		{ // JIC
 			return;
 		}
 		if (msg == null)
