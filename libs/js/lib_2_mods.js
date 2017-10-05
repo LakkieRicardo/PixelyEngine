@@ -10,6 +10,18 @@ function Mod(rname, version, author, desc, dname) {
 	}
 }
 
+function EventRegistry(handlers...) {
+	this.handlers = handlers;
+}
+
+/**
+* A struct that stores a event name, its params
+*/
+function EventRegistryHandler(name, paramsProto) {
+	this.name = name;
+	this.paramsProto = paramsProto;
+}
+
 function register_mod(mod) {
 	if (!(mod instanceof Mod)) {
 		dlog.warning("Invalid mod specified: " + mod);
