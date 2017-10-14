@@ -23,6 +23,13 @@ public class Sprite extends SimplifiedImage implements Nameable
 		this.name = name;
 		sprites.submit(this);
 	}
+	
+	public Sprite(int[] pixels, int w, int h, String name)
+	{
+		super(w, h, pixels);
+		this.name = name;
+		sprites.submit(this);
+	}
 
 	public Sprite(String loadPath, String name)
 	{

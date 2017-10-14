@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.lakkie</groupId>
 	<artifactId>pixely-engine</artifactId>
-	<version>1.0-CUSTOM</version>
+	<version>1.0-ALPHA</version>
 	<name>PixelyEngine</name>
 	<description>A pixel-based game engine.</description>
 	<build>
