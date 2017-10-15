@@ -152,6 +152,9 @@ public final class Application
 		}
 		g.drawImage(((RenderEngine) Application.ctx.get(PixelyContext.renderEngine)).cameraImage, 0, 0, targetWidth, targetHeight, null);
 
+		// See RenderEngine#finishRender for details
+		renderEngine.finishRender();
+		
 		if (ui != null)
 		{
 			ui.render(ctx);
@@ -208,6 +211,9 @@ public final class Application
 				if (ctx.isDebugActive())
 				{
 					currentWindow.rename(normTitle + " | FPS: " + loop_Frames + " UPS: " + loop_Updates);
+				} else
+				{
+					currentWindow.rename(normTitle);
 				}
 				fps = loop_Frames;
 				ups = loop_Updates;

@@ -14,7 +14,7 @@ public class GameContextProvider implements IContextProvider
 	public void setup(PixelyContext context)
 	{
 		Canvas canvas = CanvasCreator.createCanvas(GameTest.width, GameTest.height);
-		context.put(canvas, 60.0D, GameTest.width, GameTest.height, false, RenderEngine.engines.get(RenderEngineBasic.name));
+		context.put(canvas, 60.0D, GameTest.width, GameTest.height, false, RenderEngine.engines.get(RenderEngineBasic.name), 100000);
 	}
 
 }

@@ -16,6 +16,7 @@ public class PixelyContext
 	public static final String debug = "debug";
 	public static final String renderEngine = "render_engine";
 	public static final String graphics = "graphics";
+	public static final String maxSprites = "max_sprites";
 
 	Map<String, Object> fields;
 
@@ -35,7 +36,7 @@ public class PixelyContext
 		fields.put(name, value);
 	}
 
-	public void put(Canvas canvas, double ups, int width, int height, boolean debug, RenderEngine engine)
+	public void put(Canvas canvas, double ups, int width, int height, boolean debug, RenderEngine engine, int maxSprites)
 	{
 		fields.put(PixelyContext.canvas, canvas);
 		fields.put(PixelyContext.ups, ups);
@@ -43,6 +44,7 @@ public class PixelyContext
 		fields.put(PixelyContext.height, height);
 		fields.put(PixelyContext.debug, debug);
 		fields.put(PixelyContext.renderEngine, engine);
+		fields.put(PixelyContext.maxSprites, maxSprites);
 	}
 
 	public double getUPS()
@@ -63,6 +65,11 @@ public class PixelyContext
 	public int getHeight()
 	{
 		return (int) fields.get(PixelyContext.height);
+	}
+
+	public int getMaxSprites()
+	{
+		return (int) fields.get(PixelyContext.maxSprites);
 	}
 
 	public boolean isDebugActive()

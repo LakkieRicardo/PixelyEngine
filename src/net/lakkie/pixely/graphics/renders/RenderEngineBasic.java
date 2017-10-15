@@ -56,7 +56,7 @@ public class RenderEngineBasic extends RenderEngine
 
 	public void renderTile(Tile tile)
 	{
-		renderSprite(tile.pos.x, tile.pos.y, tile.sprite);
+		this.renderSprite(tile.pos.x, tile.pos.y, tile.sprite);
 	}
 
 	public void renderEntity(Entity entity)

@@ -3,8 +3,10 @@ package net.lakkie.pixely.level;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.lakkie.pixely.app.Application;
 import net.lakkie.pixely.context.PixelyContext;
 import net.lakkie.pixely.entity.Entity;
+import net.lakkie.pixely.graphics.RenderEngine;
 import net.lakkie.pixely.i.IRenderable;
 import net.lakkie.pixely.i.IUpdatable;
 
@@ -29,10 +31,13 @@ public class Level implements IUpdatable, IRenderable
 
 	private boolean unloaded = false;
 	public final String name;
+	private final LevelPostUpdater postUpdate;
 
 	public Level(String name)
 	{
 		this.name = name;
+		this.postUpdate = new LevelPostUpdater();
+		Application.getPostUpdatables().add(this.postUpdate);
 	}
 
 	/**
@@ -139,17 +144,61 @@ public class Level implements IUpdatable, IRenderable
 	{
 		if (unloaded)
 			return;
+		RenderEngine engine = (RenderEngine) context.get(PixelyContext.renderEngine);
+		for (Tile tile : Tile.tiles)
+		{
+			if (tile.level == this)
+			{
+				engine.renderTile(tile);
+			}
+		}
+		for (Entity entity : Entity.entities)
+		{
+			if (entity.level == this)
+			{
+				engine.renderEntity(entity);
+			}
+		}
+		this.onRender(context);
 	}
 
-	public final void update(PixelyContext context)
+	protected void onRender(PixelyContext context)
+	{
+	}
+
+	public void update(PixelyContext context)
 	{
 		if (unloaded)
 			return;
+		this.onUpdate(context);
+	}
+
+	protected void onUpdate(PixelyContext context)
+	{
+	}
+
+	public final void postUpdate(PixelyContext context)
+	{
+		this.onPostUpdate(context);
+	}
+
+	protected void onPostUpdate(PixelyContext context)
+	{
 	}
 
 	public String getName()
 	{
 		return name;
+	}
+
+	private class LevelPostUpdater implements IUpdatable
+	{
+
+		public void update(PixelyContext context)
+		{
+			postUpdate(context);
+		}
+
 	}
 
 }

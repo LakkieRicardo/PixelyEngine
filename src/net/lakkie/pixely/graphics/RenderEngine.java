@@ -3,7 +3,9 @@ package net.lakkie.pixely.graphics;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
+import net.lakkie.pixely.app.Application;
 import net.lakkie.pixely.entity.Entity;
+import net.lakkie.pixely.graphics.renders.RenderEngineGraphics;
 import net.lakkie.pixely.graphics.tex.Sprite;
 import net.lakkie.pixely.level.Tile;
 import net.lakkie.pixely.math.Vector2i;
@@ -40,7 +42,19 @@ public abstract class RenderEngine implements Nameable
 
 	public abstract void renderEntity(Entity entity);
 
+	/**
+	 * This method is called when the game starts, AKA when
+	 * {@link Application#start(PixelyContext, Window)} is called
+	 */
 	public void firstStart()
+	{
+	}
+
+	/**
+	 * Called when all the sprites are finished rendering, and the image has been
+	 * drawn onto the canvas. Before UI(Used by {@link RenderEngineGraphics}).
+	 */
+	public void finishRender()
 	{
 	}
 
