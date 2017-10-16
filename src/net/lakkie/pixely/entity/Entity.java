@@ -35,6 +35,10 @@ public class Entity implements IUpdatable, IRenderable, Nameable
 		this.renderer = renderer == null ? new DefaultEntityRenderer(sprite) : renderer;
 		this.velocity = new Vector2i();
 		entities.submit(this);
+		if (this.level != null)
+		{
+			this.level.getEntities().add(this); // extractEntitiesFromLevel returns a reference
+		}
 	}
 
 	public void addForce(Vector2i force)
@@ -173,7 +177,10 @@ public class Entity implements IUpdatable, IRenderable, Nameable
 
 	public Vector2i getPositionLate()
 	{
-		if (this.pos == null) { return new Vector2i(); }
+		if (this.pos == null)
+		{
+			return new Vector2i();
+		}
 
 		if (this.isPositionLate)
 		{

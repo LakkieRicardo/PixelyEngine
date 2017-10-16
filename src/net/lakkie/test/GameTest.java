@@ -7,7 +7,7 @@ import net.lakkie.pixely.app.ExitCode;
 import net.lakkie.pixely.context.PixelyContext;
 import net.lakkie.pixely.entity.defaults.input.AttachmentController;
 import net.lakkie.pixely.graphics.RenderEngine;
-import net.lakkie.pixely.graphics.renders.RenderEngineBasic;
+import net.lakkie.pixely.graphics.renders.RenderEngineGraphics;
 import net.lakkie.pixely.graphics.tex.Sprite;
 import net.lakkie.pixely.input.Buttons;
 import net.lakkie.pixely.input.InputManager;
@@ -24,12 +24,14 @@ public class GameTest
 {
 
 	public static final int width = 1280, height = 720;
+	public static final int maxSprites = 10000;
 	public static final Random rand = new Random();
+	public static RenderEngine renderEngine;
 
 	public static void main(String[] args)
 	{
 		// Create the render engine
-		new RenderEngineBasic(new Vector4(0, 0, width, height));
+		renderEngine = new RenderEngineGraphics(new Vector4(0, 0, width, height));
 
 		// Create a level
 		Level level = new Level("test");
@@ -45,7 +47,7 @@ public class GameTest
 		EntityBody body = new EntityBody(level, new Vector2i(150, 25), "body");
 
 		// Load tiles
-		for (int i = 0; i < 1000; i++)
+		for (int i = 0; i < 10000; i++)
 		{
 			new Tile(level, spriteGreen, rand.nextInt(2000) - 1000, rand.nextInt(2000) - 1000, "test-" + i);
 		}
@@ -62,9 +64,6 @@ public class GameTest
 
 		// Get the current render engine
 		RenderEngine engine = (RenderEngine) context.get(PixelyContext.renderEngine);
-
-		Application.loadModLibs();
-		Application.loadMod("/mods/test.js");
 
 		Application.setUpdate((ctx) -> {
 			/*
@@ -84,8 +83,7 @@ public class GameTest
 				ctx.set(PixelyContext.debug, !ctx.isDebugActive());
 			}
 
-			player.update(ctx);
-			body.update(ctx);
+			level.update(ctx);
 
 		});
 

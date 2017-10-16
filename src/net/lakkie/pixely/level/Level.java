@@ -29,6 +29,8 @@ import net.lakkie.pixely.i.IUpdatable;
 public class Level implements IUpdatable, IRenderable
 {
 
+	private List<Entity> entityCache;
+	private List<Tile> tileCache;
 	private boolean unloaded = false;
 	public final String name;
 	private final LevelPostUpdater postUpdate;
@@ -58,7 +60,7 @@ public class Level implements IUpdatable, IRenderable
 		if (unloaded)
 			return;
 		// TODO: Say something
-		for (Tile tile : extractTilesFromLevel())
+		for (Tile tile : getTiles())
 		{
 			tile.level = null;
 		}
@@ -69,7 +71,7 @@ public class Level implements IUpdatable, IRenderable
 		if (unloaded)
 			return;
 		// TODO: Say something
-		for (Entity entity : extractEntitiesFromLevel())
+		for (Entity entity : getEntities())
 		{
 			entity.level = null;
 		}
@@ -98,46 +100,63 @@ public class Level implements IUpdatable, IRenderable
 		if (unloaded)
 			return;
 		entity.level = this;
+		this.entityCache.add(entity);
 	}
 
-	/**
-	 * Extracts all the entities from the entity registry.
-	 * 
-	 * @return A new list of all of the entities in this level.
-	 */
-	public final List<Entity> extractEntitiesFromLevel()
+	public void updateEntityCache()
 	{
-		if (unloaded)
-			return null;
-		List<Entity> result = new ArrayList<Entity>();
+		this.entityCache = new ArrayList<Entity>();
 		for (Entity entity : Entity.entities)
 		{
 			if (entity.level == this)
 			{
-				result.add(entity);
+				this.entityCache.add(entity);
 			}
 		}
-		return result;
 	}
 
 	/**
-	 * Extracts all the tiles from the level registry.
+	 * Gets the cache of all entities in the level
 	 * 
-	 * @return A new list of all of the levels in this level.
+	 * @return A cached list of all of the entities in this level.
 	 */
-	public final List<Tile> extractTilesFromLevel()
+	public final List<Entity> getEntities()
 	{
 		if (unloaded)
 			return null;
-		List<Tile> result = new ArrayList<Tile>();
+		if (this.entityCache == null)
+		{
+			this.updateEntityCache();
+		}
+		return this.entityCache;
+	}
+
+	public void updateTileCache()
+	{
+		this.tileCache = new ArrayList<Tile>();
 		for (Tile tile : Tile.tiles)
 		{
 			if (tile.level == this)
 			{
-				result.add(tile);
+				this.tileCache.add(tile);
 			}
 		}
-		return result;
+	}
+
+	/**
+	 * Gets the cache of all tiles in the level
+	 * 
+	 * @return A cached list of all of the tiles in this level.
+	 */
+	public final List<Tile> getTiles()
+	{
+		if (unloaded)
+			return null;
+		if (this.tileCache == null)
+		{
+			this.updateTileCache();
+		}
+		return this.tileCache;
 	}
 
 	public final void render(PixelyContext context)
@@ -145,14 +164,14 @@ public class Level implements IUpdatable, IRenderable
 		if (unloaded)
 			return;
 		RenderEngine engine = (RenderEngine) context.get(PixelyContext.renderEngine);
-		for (Tile tile : Tile.tiles)
+		for (Tile tile : this.tileCache)
 		{
 			if (tile.level == this)
 			{
 				engine.renderTile(tile);
 			}
 		}
-		for (Entity entity : Entity.entities)
+		for (Entity entity : this.entityCache)
 		{
 			if (entity.level == this)
 			{
@@ -166,10 +185,18 @@ public class Level implements IUpdatable, IRenderable
 	{
 	}
 
-	public void update(PixelyContext context)
+	public final void update(PixelyContext context)
 	{
 		if (unloaded)
 			return;
+		for (Tile tile : this.tileCache)
+		{
+			tile.update(context);
+		}
+		for (Entity entity : this.entityCache)
+		{
+			entity.update(context);
+		}
 		this.onUpdate(context);
 	}
 

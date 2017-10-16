@@ -25,6 +25,10 @@ public class Tile implements Nameable, IUpdatable
 		this.sprite = sprite;
 		this.pos = new Vector2i(x, y);
 		tiles.submit(this);
+		if (this.level != null)
+		{
+			this.level.getTiles().add(this); // extractTilesFromLevel returns a reference
+		}
 	}
 
 	public Tile(Level level, Sprite sprite, Vector2i pos, String name)
