@@ -10,8 +10,6 @@ _To build using Maven, [click here](https://github.com/LakkieGaming/PixelyEngine
 
 ## Todo list
 
-* Add eclipse conventions
-
 * Physics
 * Collision
 * Gravity
