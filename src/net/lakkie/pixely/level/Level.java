@@ -206,6 +206,16 @@ public class Level implements IUpdatable, IRenderable
 
 	public final void postUpdate(PixelyContext context)
 	{
+		if (unloaded)
+			return;
+		for (Entity entity : this.entityCache)
+		{
+			entity.postUpdate(context);
+		}
+		for (Entity entity : this.entityCache)
+		{
+			entity.resetUpdateSwitches();
+		}
 		this.onPostUpdate(context);
 	}
 

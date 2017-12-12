@@ -1,5 +1,6 @@
 package net.lakkie.test;
 
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import net.lakkie.pixely.app.Application;
@@ -9,22 +10,24 @@ import net.lakkie.pixely.entity.defaults.input.AttachmentController;
 import net.lakkie.pixely.graphics.RenderEngine;
 import net.lakkie.pixely.graphics.renders.RenderEngineGraphics;
 import net.lakkie.pixely.graphics.tex.Sprite;
+import net.lakkie.pixely.graphics.tex.loadDirect.DirectTextureLoader;
 import net.lakkie.pixely.input.Buttons;
 import net.lakkie.pixely.input.InputManager;
 import net.lakkie.pixely.level.Level;
 import net.lakkie.pixely.level.Tile;
 import net.lakkie.pixely.math.Vector2i;
 import net.lakkie.pixely.math.Vector4;
+import net.lakkie.pixely.utils.AnchorGraphics;
+import net.lakkie.pixely.utils.AnchorGraphicsMode;
 import net.lakkie.pixely.utils.MovementInputLayout;
 import net.lakkie.pixely.window.JFrameWindow;
-import net.lakkie.test.entities.EntityBody;
 import net.lakkie.test.entities.EntityPlayer;
 
 public class GameTest
 {
 
 	public static final int width = 1280, height = 720;
-	public static final int maxSprites = 10000;
+	public static final int maxSprites = 10005;
 	public static final Random rand = new Random();
 	public static RenderEngine renderEngine;
 
@@ -38,16 +41,17 @@ public class GameTest
 
 		// Load sprites
 		Sprite spriteRed = new Sprite("/img/red.png", "red");
-		// Sprite spriteBlank = new Sprite(0xff00ff00, width, height, "blank");
 		Sprite spriteGreen = new Sprite("/img/test.png", "green");
 
+		// Load UI sprites
+		BufferedImage buttonImage = DirectTextureLoader.readImage("/img/ui/button.png");
+		
 		// Load entities
 		EntityPlayer player = new EntityPlayer(level, spriteRed, new Vector2i(50, 50), "player");
 		player.add(new AttachmentController(3, MovementInputLayout.WASD));
-		EntityBody body = new EntityBody(level, new Vector2i(150, 25), "body");
 
 		// Load tiles
-		for (int i = 0; i < 10000; i++)
+		for (int i = 0; i < 30; i++)
 		{
 			new Tile(level, spriteGreen, rand.nextInt(2000) - 1000, rand.nextInt(2000) - 1000, "test-" + i);
 		}
@@ -89,7 +93,7 @@ public class GameTest
 
 		Application.setPostUpdate((ctx) -> {
 
-			body.postUpdate(ctx);
+			level.postUpdate(ctx);
 
 		});
 
@@ -99,18 +103,13 @@ public class GameTest
 			 * Render clause
 			 */
 
-			// Clear background
-			engine.clear(0x00000000);
-
-			// Render all tiles
-			for (Tile tile : Tile.tiles)
-			{
-				engine.renderTile(tile);
-			}
-
-			engine.renderEntity(player);
-			engine.renderEntity(body);
-
+			// Render the level
+			level.render(ctx);
+			
+			// Render some GUI
+			AnchorGraphics.setAnchorPoints(AnchorGraphicsMode.BOTTOM, AnchorGraphicsMode.RIGHT);
+			AnchorGraphics.drawImage(Application.graphics, buttonImage, 0, 0, buttonImage.getWidth(), buttonImage.getHeight());
+			
 		});
 
 		Application.setExitDetails("Successfully closed");

@@ -24,6 +24,10 @@ public class Entity implements IUpdatable, IRenderable, Nameable
 	public IEntityRenderer renderer;
 	public Level level;
 	public boolean isPositionLate = false;
+	boolean hasUpdated = false;
+	public List<Entity> updateRequires = new ArrayList<>();
+	boolean hasPostUpdated = false;
+	public List<Entity> postUpdateRequires = new ArrayList<>();
 
 	public Entity(Level level, Sprite sprite, Vector2i pos, String name)
 	{
@@ -141,6 +145,16 @@ public class Entity implements IUpdatable, IRenderable, Nameable
 
 	public final void update(PixelyContext ctx)
 	{
+		if (this.updateRequires.size() != 0)
+		{
+			for (Entity require : this.updateRequires)
+			{
+				if (require.hasUpdated == false)
+				{
+					require.update(ctx);
+				}
+			}
+		}
 		this.isPositionLate = false;
 		onPreUpdate(ctx);
 		for (EntityAttachment attach : this.attachments)
@@ -152,10 +166,21 @@ public class Entity implements IUpdatable, IRenderable, Nameable
 		{
 			attach.update(ctx);
 		}
+		this.hasUpdated = true;
 	}
 
 	public final void postUpdate(PixelyContext ctx)
 	{
+		if (this.postUpdateRequires.size() != 0)
+		{
+			for (Entity require : this.postUpdateRequires)
+			{
+				if (require.hasPostUpdated == false)
+				{
+					require.postUpdate(ctx);
+				}
+			}
+		}
 		this.pos = this.pos.add(this.velocity);
 		this.isPositionLate = true;
 		onPostUpdate(ctx);
@@ -163,6 +188,7 @@ public class Entity implements IUpdatable, IRenderable, Nameable
 		{
 			attach.postUpdate(ctx);
 		}
+		this.hasPostUpdated = true;
 	}
 
 	public void applyForce(Vector2i force)
@@ -177,10 +203,7 @@ public class Entity implements IUpdatable, IRenderable, Nameable
 
 	public Vector2i getPositionLate()
 	{
-		if (this.pos == null)
-		{
-			return new Vector2i();
-		}
+		if (this.pos == null) { return new Vector2i(); }
 
 		if (this.isPositionLate)
 		{
@@ -189,6 +212,12 @@ public class Entity implements IUpdatable, IRenderable, Nameable
 		{
 			return this.pos.add(this.velocity);
 		}
+	}
+
+	public void resetUpdateSwitches()
+	{
+		this.hasUpdated = false;
+		this.hasPostUpdated = false;
 	}
 
 }
