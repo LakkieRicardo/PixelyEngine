@@ -45,7 +45,7 @@ public class GameTest
 
 		// Load UI sprites
 		BufferedImage buttonImage = DirectTextureLoader.readImage("/img/ui/button.png");
-		
+
 		// Load entities
 		EntityPlayer player = new EntityPlayer(level, spriteRed, new Vector2i(50, 50), "player");
 		player.add(new AttachmentController(3, MovementInputLayout.WASD));
@@ -105,11 +105,14 @@ public class GameTest
 
 			// Render the level
 			level.render(ctx);
-			
+
+		});
+
+		Application.setUIRenderable((ctx) -> {
 			// Render some GUI
 			AnchorGraphics.setAnchorPoints(AnchorGraphicsMode.BOTTOM, AnchorGraphicsMode.RIGHT);
-			AnchorGraphics.drawImage(Application.graphics, buttonImage, 0, 0, buttonImage.getWidth(), buttonImage.getHeight());
-			
+			AnchorGraphics.drawImage(Application.graphics, buttonImage, 0, 0, buttonImage.getWidth() / 4, buttonImage.getHeight() / 4);
+
 		});
 
 		Application.setExitDetails("Successfully closed");
